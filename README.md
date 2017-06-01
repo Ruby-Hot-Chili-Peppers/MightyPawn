@@ -20,22 +20,20 @@
 * Add all devs as reviewers
 * Finish creating PR
 * Attach PR on Trello
-* Label card as ‘Pending code review’ on Trello
-* Move card to ‘review’ on Trello  
+* Label card as "Pending code review" on Trello
+* Move card to "Review" on Trello  
 
 *3. Review*
 * Have someone review PR and if "Changes Requested" (reviewer should test locally)
-* Move card from "review" to "in progress" on Trello
-* Change trello label status to "changes requested" on Trello
-* Once changes are made and ready for code review, move to "review" and add "Pending code review" label on Trello
+* Move card from "Review" to "In progress" on Trello
+* Change trello label status to "Changes requested" on Trello
+* Once changes are made and ready for code review, move to "Review" and add "Pending code review" label on Trello
 * Repeat process until PR is accepted
 
 *4. Merge into Master branch*
 * Once code is reviewed on GitHub and looks good, another dev member will merge code into master branch
-* Move card into "testing" block on Trello and add "pending manual testing" label 
+* Move card into "Testing" block on Trello and add "Pending manual testing" label 
 * Code will be tested locally under master branch by other dev members(add comment on Trello to indicate test works)
-* If code works then deploy to heroku locally and move card to "complete block"
-* If code doesn't work then label card "Changes requested" and move back to "in progress" 
-
-
+* If code works then deploy to heroku locally and move card to "Complete" block
+* If code doesn't work then label card "Changes requested" and move back to "In progress" 
 
