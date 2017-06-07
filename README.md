@@ -5,7 +5,7 @@
 *1. Backlog*  
 * Choose task from backlog
 * "git pull origin master" to pull down latest code
-* ****bundle exec rake db: locally to drop, create, migrate, & seed local DB***
+* ***bundle exec rake db:reset (locally it drops, creates, migrates, & updates the seed.rb file for the DB)***
 * Create branch in local environment from "master" (never from an existing branch) ---> ‘git checkout -b NAME_OF_BRANCH’
 * Push to Github ‘git push origin NAME_OF_BRANCH’
 * Attach branch on Trello
