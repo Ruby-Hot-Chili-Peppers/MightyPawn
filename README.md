@@ -23,7 +23,7 @@
 * Label card as "Pending code review" on Trello
 * Move card to "Review" on Trello  
 
-*3. Review*
+*3. Review*  
 _Reviewers should test locally and merge master into branch and add comment on Trello from test_
 * Have someone review PR and if "Changes Requested" 
 * Move card from "Review" to "In progress" on Trello
