@@ -1,3 +1,26 @@
 // Place all the styles related to the static controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+table {
+	margin: 1px auto;
+	border-collapse: collapse;
+	background: black;
+	padding: 20px; 
+}
+
+h1 { 
+    text-align: center;
+}
+td { /*Change this to change box size I just eyeballed on my computer! */
+     width: 70px; height: 70px;
+}
+
+tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
+	background: white;
+}/* #had internet help here not my design :! better than manually putting in black or white background to all the boxes though*/
+
+table, th, td {  /*This is the line or border so changes as needed! */
+   border: 5px solid black;
+}
