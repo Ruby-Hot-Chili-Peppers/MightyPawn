@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  position_row: 1
+  position_column: 1
+  user_id: 1
+  game_id: 1
+  color: MyString
+  type: 
+
+two:
+  position_row: 1
+  position_column: 1
+  user_id: 1
+  game_id: 1
+  color: MyString
+  type: 
