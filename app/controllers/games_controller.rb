@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     @game = Game.find(params[:id])
   end
@@ -6,6 +8,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.create(white_player_id: current_user.id)
     #Need to refresh the page here
+    redirect_to :back
   end
 
   def update
