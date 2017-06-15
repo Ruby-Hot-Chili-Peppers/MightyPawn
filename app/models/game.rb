@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
 
   scope :available, -> { where(black_player_id: nil) }
+  scope :current, -> { where(black_player_id: !nil) }
 
   after_create :set_pieces_on_board
   after_create :set_default_turn

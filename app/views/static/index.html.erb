@@ -8,6 +8,16 @@
   </h2>
  <% end %>
 
+<h1> Current Games </h1>
+
+ <% @current.each do |game| %>
+ 
+  <h2 class="text-center"> 
+    <%= link_to "Game #{game.id}", game_path(game) %> 
+    <br>
+  </h2>
+ <% end %>
+
 <br>
 <h1> Do we need this here too?</h1>
 <!--#html is is the static.scss -->
