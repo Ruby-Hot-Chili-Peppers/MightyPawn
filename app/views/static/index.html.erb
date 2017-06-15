@@ -1,7 +1,15 @@
-<h1> Good bye  you were hacked!!</h1>
-<h1> This is another test by EF </h1>
 
-<h1>Chess Board Test</h1>
+<h1> Available Games </h1>
+
+<% @available.each do |game| %>
+  <h2 class="text-center"> 
+    <%= link_to "Game #{game.id}", game_path(game) %> 
+    <br>
+  </h2>
+ <% end %>
+
+<br>
+<h1> Do we need this here too?</h1>
 <!--#html is is the static.scss -->
 
 <table>
@@ -14,3 +22,4 @@
 	<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 	<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 </table>
+
