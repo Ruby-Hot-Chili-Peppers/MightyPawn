@@ -63,6 +63,14 @@ class Game < ApplicationRecord
     turn == white_player_id ? self.turn = black_player_id : self.turn = white_player_id
   end
 
+  def data_method
+    pieces_hash = Hash.new {|hash, key| hash[key]={}}
 
+    pieces.each do |piece|
+      pieces_hash[piece.position_column][piece.position_row]= piece
+    end 
+    
+    pieces_hash
+  end
 
 end
