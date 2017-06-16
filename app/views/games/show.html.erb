@@ -12,12 +12,17 @@
 <br>
 
 <table>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-</table>
+<%(0..7).reverse_each do |position_row|%>
+  <tr class= 'position_row'>
+        
+    <%(0..7).each do |position_column|%>
+      <td class= 'position_column' data-x-position'<%=position_column%>' data-y-position'<%=position_row%>'>
+      <div class='chess_pieces'>
+      <%piece = @game.data_method[position_column][position_row]%>  
+      <%=piece.symbol.html_safe if piece.present?%>
+      </div>
+      </td>
+    <% end %>
+  </tr>
+<%end %>
+<table>
