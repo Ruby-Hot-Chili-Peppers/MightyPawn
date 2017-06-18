@@ -7,7 +7,8 @@ class Game < ApplicationRecord
 
   has_many :pieces 
 
-
+  after_create :set_pieces_on_board
+  after_create :set_default_turn
 
   def set_pieces_on_board
     #white pieces
@@ -60,6 +61,16 @@ class Game < ApplicationRecord
 
   def switch_player_turn
     turn == white_player_id ? self.turn = black_player_id : self.turn = white_player_id
+  end
+
+  def data_method
+    pieces_hash = Hash.new {|hash, key| hash[key]={}}
+
+    pieces.each do |piece|
+      pieces_hash[piece.position_column][piece.position_row]= piece
+    end 
+    
+    pieces_hash
   end
 
 end
