@@ -58,10 +58,8 @@ RSpec.describe Game, type: :model do
     it 'raise an error if invalid input' do
       game = Game.create(id: 1, white_player_id: 1, black_player_id: 2)
       pawn = Piece.where(:color => 'white', :position_row => 0, :position_column => 7 ).first
-      check = pawn.is_obstructed?(1,2)
-      puts check 
 
-      expect{ }.to raise_error(RuntimeError)
+      expect{ check = pawn.is_obstructed?(1,2) }.to raise_error(RuntimeError)
     end
   end
 end

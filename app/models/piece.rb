@@ -41,33 +41,29 @@ class Piece < ApplicationRecord
       if col_init <= col_final #going right
         col_rng = (col_init...col_final).to_a
         col_rng = col_rng[1, col_rng.length]
-        return !Piece.exists?(position_row: row_init, position_column: col_rng)
-      end
-      
-      if col_init > col_final #going left
+
+      else #going left
         col_rng = col_init.downto(col_final).to_a
         col_rng = col_rng[1, col_rng.length-2]
-        return !Piece.exists?(position_row: row_init, position_column: col_rng)
       end
+      #puts 'horizontal case'
+      return !Piece.exists?(position_row: row_init, position_column: col_rng)
 
-
-    #vertical case
+      #vertical case
     elsif col_init == col_final 
       if row_init <= row_final #going up
         row_rng = (row_init...row_final).to_a
         row_rng = row_rng[1, row_rng.length]
-        return !Piece.exists?(position_row: row_rng, position_column: col_init)
-      end
-      
-      if row_init > row_final #going down
+        
+      else #going down
         row_rng = row_init.downto(row_final).to_a 
         row_rng = row_rng[1, row_rng.length-2]
-        return !Piece.exists?(position_row: row_rng, position_column: col_init)
       end
-    
+      #puts 'vertical case'
+      return !Piece.exists?(position_row: row_rng, position_column: col_init)
 
-    #diagonal case
-    elsif ((row_final - row_init)/(col_final - col_init)).abs == 1
+      #diagonal case
+    elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
       if row_init <= row_final #going up
         row_rng = (row_init...row_final).to_a
         row_rng = row_rng[1, row_rng.length]
@@ -83,6 +79,7 @@ class Piece < ApplicationRecord
         col_rng = col_init.downto(col_final).to_a
         col_rng = col_rng[1, col_rng.length-2]
       end
+
       #puts "test diagonally"
       #p row_rng
       #p col_rng
@@ -90,9 +87,9 @@ class Piece < ApplicationRecord
       return !Piece.exists?(position_row: row_rng, position_column: col_rng)
     
 
-    #invalid input case
+      #invalid input case
     else
-      puts "Testing this case does occur"
+      #puts "Test invalid"
       raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
     end
   end
