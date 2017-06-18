@@ -36,60 +36,52 @@ class Piece < ApplicationRecord
     row_init = self.position_row
     col_init = self.position_column
 
+    def array_up(init, final)
+      array = (init...final).to_a
+      array = array[1,array.length]
+    end
+
+    def array_down(init, final)
+      array = init.downto(final).to_a
+      array = array[1, array.length-2]
+    end
+
     #horizonal case
     if row_init == row_final
       if col_init <= col_final #going right
-        col_rng = (col_init...col_final).to_a
-        col_rng = col_rng[1, col_rng.length]
-
+        col_rng = array_up(col_init, col_final)
       else #going left
-        col_rng = col_init.downto(col_final).to_a
-        col_rng = col_rng[1, col_rng.length-2]
+        col_rng = array_down(col_init, col_final)
       end
-      #puts 'horizontal case'
       return !Piece.exists?(position_row: row_init, position_column: col_rng)
 
       #vertical case
     elsif col_init == col_final 
       if row_init <= row_final #going up
-        row_rng = (row_init...row_final).to_a
-        row_rng = row_rng[1, row_rng.length]
-        
+        row_rng = array_up(row_init, row_final)
       else #going down
-        row_rng = row_init.downto(row_final).to_a 
-        row_rng = row_rng[1, row_rng.length-2]
+        row_rng = array_down(row_init, row_final)
       end
-      #puts 'vertical case'
       return !Piece.exists?(position_row: row_rng, position_column: col_init)
 
       #diagonal case
     elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
       if row_init <= row_final #going up
-        row_rng = (row_init...row_final).to_a
-        row_rng = row_rng[1, row_rng.length]
+        row_rng = array_up(row_init, row_final)
       else #going down
-        row_rng = row_init.downto(row_final).to_a 
-        row_rng = row_rng[1, row_rng.length-2]
+        row_rng = array_down(row_init, row_final)
       end
 
       if col_init <= col_final #going right
-        col_rng = (col_init...col_final).to_a
-        col_rng = col_rng[1, col_rng.length-2]
+        col_rng = array_up(col_init, col_final)
       else  #going left
-        col_rng = col_init.downto(col_final).to_a
-        col_rng = col_rng[1, col_rng.length-2]
+        col_rng = array_down(col_init, col_final)
       end
 
-      #puts "test diagonally"
-      #p row_rng
-      #p col_rng
-      #puts Piece.exists?(position_row: row_rng, position_column: col_rng)
       return !Piece.exists?(position_row: row_rng, position_column: col_rng)
     
-
       #invalid input case
     else
-      #puts "Test invalid"
       raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
     end
   end

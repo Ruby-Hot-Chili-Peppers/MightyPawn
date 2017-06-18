@@ -44,7 +44,7 @@ RSpec.describe Game, type: :model do
       expect(check2).to be false
     end
 
-    it 'cannot allow a piece to move diagonally if obstruction exists' do
+    it 'returns false to move diagonally if obstruction exists' do
       game = Game.create(id: 1, white_player_id: 1, black_player_id: 2)
       pawn = Piece.where(:color => 'white', :position_row => 0, :position_column => 7 ).first
       pawn2 = Piece.where(:color => 'black', :position_row => 7, :position_column => 7 ).first
@@ -52,10 +52,10 @@ RSpec.describe Game, type: :model do
       check = pawn.is_obstructed?(7,0) #bottom right corner to top left corner
       check2 = pawn2.is_obstructed?(0,0) #top right corner to bottom left corner
       expect(check).to be false
-      #expect(check2).to be false
+      expect(check2).to be false
     end
 
-    it 'raise an error if invalid input' do
+    it 'raises an error if invalid input' do
       game = Game.create(id: 1, white_player_id: 1, black_player_id: 2)
       pawn = Piece.where(:color => 'white', :position_row => 0, :position_column => 7 ).first
 
