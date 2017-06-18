@@ -1,10 +1,6 @@
 class Game < ApplicationRecord
 
   scope :available, -> { where(black_player_id: nil) }
-  scope :current, -> { where(black_player_id: !nil) }
-
-  after_create :set_pieces_on_board
-  after_create :set_default_turn
 
   belongs_to :white_player, class_name: "User", foreign_key:"white_player_id", required: false
   belongs_to :black_player, class_name: "User", foreign_key:"black_player_id", required: false
