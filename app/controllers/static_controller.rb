@@ -1,6 +1,6 @@
 class StaticController < ApplicationController
   def index
     @available = Game.available
-    @current = Game.current
+    @current = Game.all
   end
 end
