@@ -5,10 +5,7 @@ class Game < ApplicationRecord
   belongs_to :white_player, class_name: "User", foreign_key:"white_player_id", required: false
   belongs_to :black_player, class_name: "User", foreign_key:"black_player_id", required: false
 
-  has_many :pieces 
-
-  after_create :set_pieces_on_board
-  after_create :set_default_turn
+  has_many :pieces
 
   def set_pieces_on_board
     #white pieces
