@@ -1,8 +1,8 @@
 
-  <h2 class="text-center"> 
-    <%= link_to "Start New Game", new_game_path %> 
-  </h2>
 
+<h2 class="text-center"> 
+  <%= link_to "Start New Game", new_game_path %> 
+</h2>
 
 <br>
 
@@ -13,8 +13,18 @@
     <%= link_to "Game #{game.id}", game_path(game) %> 
     <br>
   </h2>
- <% end %>
+<% end %>
+
+<h1> Current Games </h1>
+  <% if current_user %> <
+  <% @current.each do |game| %>
+    <% if current_user.id == game.white_player_id || current_user.id == game.black_player_id %>
+    <h2 class="text-center"> 
+    <%= link_to "Game #{game.id}", game_path(game) %> 
+    <br>
+    </h2>
+    <% end %>
+  <% end %>
+  <% end %>
 
 <br>
-
-
