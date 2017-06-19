@@ -41,9 +41,9 @@ class Piece < ApplicationRecord
           #We can't move to a place where our own pieces are!
           puts "ERROR"
         else
-          #Setting to nil indicated captured
-          piece.position_row == nil
-          piece.position_column == nil
+          #Setting to nil to indicate a piece has been captured
+          piece.position_row = nil
+          piece.position_column = nil
         end
       end
     end
