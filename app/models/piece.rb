@@ -64,4 +64,22 @@ class Piece < ApplicationRecord
     #invalid input case
     raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
   end
+
+  #Capture_Logic
+  def move_to!(new_row, new_column)
+    @pieces = Game.find(game_id).pieces
+    @pieces.each do |piece|
+      if piece.position_row == new_row && piece.position_column == new_column
+        if piece.color == color
+          #We can't move to a place where our own pieces are!
+          puts "ERROR"
+        else
+          #Setting to nil to indicate a piece has been captured
+          piece.position_row = nil
+          piece.position_column = nil
+        end
+      end
+    end
+  end
+
 end

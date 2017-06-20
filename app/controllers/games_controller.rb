@@ -11,6 +11,8 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(white_player_id: current_user.id)
+    @game.set_pieces_on_board
+    @game.set_default_turn
     redirect_to game_path(@game)
   end
 
