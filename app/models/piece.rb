@@ -32,57 +32,36 @@ class Piece < ApplicationRecord
    
   end
 
-  def is_obstructed?(row_final, col_final)
-    row_init = self.position_row
-    col_init = self.position_column
-
-    def array_up(init, final)
+  def array_position(init, final)
+    if init <= final
       array = (init...final).to_a
       array = array[1,array.length]
-    end
-
-    def array_down(init, final)
+    else
       array = init.downto(final).to_a
       array = array[1, array.length-2]
     end
+  end
+
+  def is_obstructed?(row_final, col_final)
+    row_init = self.position_row
+    col_init = self.position_column
+    row_range = array_position(row_init, row_final)
+    col_range = array_position(col_init, col_final)
 
     #horizonal case
     if row_init == row_final
-      if col_init <= col_final #going right
-        col_rng = array_up(col_init, col_final)
-      else #going left
-        col_rng = array_down(col_init, col_final)
-      end
-      return !Piece.exists?(position_row: row_init, position_column: col_rng)
+      return Piece.exists?(position_row: row_init, position_column: col_range)
 
       #vertical case
     elsif col_init == col_final 
-      if row_init <= row_final #going up
-        row_rng = array_up(row_init, row_final)
-      else #going down
-        row_rng = array_down(row_init, row_final)
-      end
-      return !Piece.exists?(position_row: row_rng, position_column: col_init)
+      return Piece.exists?(position_row: row_range, position_column: col_init)
 
       #diagonal case
     elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
-      if row_init <= row_final #going up
-        row_rng = array_up(row_init, row_final)
-      else #going down
-        row_rng = array_down(row_init, row_final)
-      end
-
-      if col_init <= col_final #going right
-        col_rng = array_up(col_init, col_final)
-      else  #going left
-        col_rng = array_down(col_init, col_final)
-      end
-
-      return !Piece.exists?(position_row: row_rng, position_column: col_rng)
-    
-      #invalid input case
-    else
-      raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
+      return Piece.exists?(position_row: row_range, position_column: col_range)
     end
+
+    #invalid input case
+    raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
   end
 end
