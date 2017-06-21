@@ -3,17 +3,11 @@ require 'rails_helper'
 RSpec.describe Game, type: :model do
   before do
     @game = Game.create(id: 1, white_player_id: 1, black_player_id: 2)
+    @game.set_pieces_on_board
+    @game.set_default_turn
   end
 
   describe "Setup" do
-    it 'has 32 pieces' do
-      piece_count = Piece.count
-      game_count = Game.count
-      #Game.last.pieces.each {|piece| p piece}
-      expect(game_count).to eq 1
-      expect(piece_count).to eq 32
-    end
-
     it 'has 16 white pieces & 16 black pieces' do
       game_count = Game.count
       white_piece_count = Piece.where(:color => 'white').count

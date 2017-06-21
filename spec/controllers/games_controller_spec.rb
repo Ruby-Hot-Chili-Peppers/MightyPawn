@@ -18,7 +18,7 @@ RSpec.describe GamesController, type: :controller do
       #expect(response).to redirect_to root_path
       game_count = Game.count
       piece_count = Piece.count
-      p Game.last.pieces
+      #p Game.last.pieces
       expect(game_count).to eq 1
       expect(piece_count).to eq 32
     end
