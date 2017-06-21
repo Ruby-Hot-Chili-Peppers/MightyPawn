@@ -1,8 +1,9 @@
 class Piece < ApplicationRecord
   belongs_to :game
 
-  #checks if piece didn’t move
-  def not_moved?
+  #return true if piece doesn't move and false if it does
+  def no_move?(new_row, new_column)
+    position_row == new_row && position_column == new_column
   end
    
   #check if piece moves to occupied space
@@ -26,10 +27,10 @@ class Piece < ApplicationRecord
   end
    
   #checks for valid move
-  def valid_move?
-  return false if piece.not_moved?
-  #add more checks
-   
+  def valid_move?(new_row, new_column)
+    return false if no_move?(new_row, new_column)
+    return false unless proper_length?(new_row, new_column)
+    true
   end
 
   def array_position(init, final)

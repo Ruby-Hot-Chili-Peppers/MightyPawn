@@ -10,10 +10,15 @@ FactoryGirl.define do
 
 
   factory :game do 
-    #association :user
+    #association :piece
   end
 
   factory :piece do
     association :game
   end
+
+  factory :king do
+    association :piece
+  end
+  
 end

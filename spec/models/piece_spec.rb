@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Piece, type: :model do
   before do
     @game = Game.create(id: 1, white_player_id: 1, black_player_id: 2)
+    @game.set_pieces_on_board
+    @game.set_default_turn
   end
 
   describe "method is_Obstructed?" do
