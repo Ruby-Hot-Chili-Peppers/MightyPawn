@@ -10,6 +10,7 @@
       <td class= 'position_column' data-x-position'<%=position_column%>' data-y-position'<%=position_row%>'>
         <div class='chess_pieces'>
           <%piece = @game.data_method[position_column][position_row]%>
+
         <% if piece == @piece %>
             <div class='highlighted'>
               <%=piece.symbol.html_safe%>
@@ -18,11 +19,12 @@
           <%=piece.symbol.html_safe%>
         </div>
         <% else %>
-          <%= link_to piece_path(@piece), method: "put" do %>
+          <%= link_to piece_path(@piece, params: { x_coord: position_column, y_coord: position_row }),  method: "put" do %>
             <div class = "empty_space">
             </div>
           <% end %>
         <% end %>
+        
       </td>
     <% end %>
   </tr>

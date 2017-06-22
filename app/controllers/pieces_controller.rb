@@ -8,7 +8,7 @@ class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
     @game = Game.find(@piece.game_id)
-    @piece.update_attributes(position_row: @piece.position_row, position_column: @piece.position_column)
+    @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord])
     redirect_to game_path(@game)
   end
 
