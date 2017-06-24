@@ -6,6 +6,7 @@ RSpec.describe King, type: :model do
     @game.set_pieces_on_board
     @game.set_default_turn
     @king = King.first #white King @ position_row: 0, position_column: 4
+    p @king
   end
 
   describe "King\'s movement" do
