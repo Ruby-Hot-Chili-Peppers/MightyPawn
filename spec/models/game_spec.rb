@@ -10,12 +10,6 @@ RSpec.describe Game, type: :model do
 
   describe "Setup" do
 
-    it 'has 32 pieces' do
-      game_count = Game.count
-      piece_count = Piece.count
-      expect(game_count).to eq 1
-      expect(piece_count).to eq 32
-    end
 
     it 'has 16 white pieces & 16 black pieces' do
       white_piece_count = Piece.where(:color => 'white').count
