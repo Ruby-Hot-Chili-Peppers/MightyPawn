@@ -16,7 +16,7 @@
 <% end %>
 
 <h1> Current Games </h1>
-  <% if current_user %> <
+<% if current_user %>
   <% @current.each do |game| %>
     <% if current_user.id == game.white_player_id || current_user.id == game.black_player_id %>
     <h2 class="text-center"> 
@@ -25,6 +25,6 @@
     </h2>
     <% end %>
   <% end %>
-  <% end %>
+<% end %>
 
 <br>
