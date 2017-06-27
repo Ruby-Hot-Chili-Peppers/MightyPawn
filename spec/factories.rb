@@ -21,4 +21,7 @@ FactoryGirl.define do
     association :piece
   end
   
+  factory :pawn do
+    association :piece
+  end
 end
