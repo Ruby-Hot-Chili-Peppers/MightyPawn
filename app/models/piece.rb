@@ -6,7 +6,7 @@ class Piece < ApplicationRecord
     position_row == new_row && position_column == new_column
   end
 
-  #return true if piece moves out of game boundaries and false if it does
+  #return true if piece moves out of game boundaries and false if it doesn't
   def out_of_boundary?(new_row, new_column)
     new_row < 0 || new_row > 7 || new_column < 0 || new_column > 7
   end
