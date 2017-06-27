@@ -9,7 +9,7 @@ class Pawn < Piece
     return false if is_obstructed?(new_row, new_column)
 
     #------------------------------------WHITE PIECE LOGIC--------------------------------------------#
-    if color == "white"
+    if color == "black"
       #initial move can be 2 up
       if moves == 0
         #Check to see if there is a piece on the spot two ahead
@@ -25,8 +25,8 @@ class Pawn < Piece
       
       #we capture things diagonally, first figure out if a piece of the opposing color is diagonal
       #If the piece is the same color, it won't be a valid move
-      @diag_right = Game.find(game_id).pieces.where(:color => 'black', :position_row => position_row - 1, :position_column => position_column + 1)
-      @diag_left = Game.find(game_id).pieces.where(:color => 'black', :position_row => position_row - 1, :position_column => position_column - 1)
+      @diag_right = Game.find(game_id).pieces.where(:color => 'white', :position_row => position_row - 1, :position_column => position_column + 1)
+      @diag_left = Game.find(game_id).pieces.where(:color => 'white', :position_row => position_row - 1, :position_column => position_column - 1)
       #If there exists an opposing piece diagonally, we can move to the spot 
       if @diag_right.size != 0
         return true if new_row == position_row + 1 && new_column = position_column + 1 
@@ -50,8 +50,8 @@ class Pawn < Piece
       
       #we capture things diagonally, first figure out if a piece of the opposing color is diagonal
       #If the piece is the same color, it won't be a valid move
-      @diag_right = Game.find(game_id).pieces.where(:color => 'white', :position_row => position_row + 1, :position_column => position_column + 1)
-      @diag_left = Game.find(game_id).pieces.where(:color => 'white', :position_row => position_row + 1, :position_column => position_column - 1)
+      @diag_right = Game.find(game_id).pieces.where(:color => 'black', :position_row => position_row + 1, :position_column => position_column + 1)
+      @diag_left = Game.find(game_id).pieces.where(:color => 'black', :position_row => position_row + 1, :position_column => position_column - 1)
       #If there exists an opposing piece diagonally, we can move to the spot 
       if @diag_right.size != 0
         return true if new_row == position_row + 1 && new_column == position_column + 1

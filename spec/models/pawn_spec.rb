@@ -5,9 +5,9 @@ RSpec.describe Pawn, type: :model do
     @game = Game.create(id: 1, white_player_id: 1, black_player_id: 2)
     @game.set_pieces_on_board
     @game.set_default_turn
-    @pawn1 = Pawn.first #(position (1,0), color: black)
-    @pawn2 = Pawn.second #(position (1,1), color: black)
-    @pawn3 = Pawn.last #(position: (6,7), color: white)
+    @pawn1 = Pawn.first #(position (1,0), color: white)
+    @pawn2 = Pawn.second #(position (1,1), color: white)
+    @pawn3 = Pawn.last #(position: (6,7), color: black)
   end
 
   describe "Pawn's movement" do
