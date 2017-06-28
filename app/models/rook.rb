@@ -5,8 +5,8 @@ class Rook < Piece
   
     #should return false if rook unable to move
   def valid_move?(new_row, new_column)
-    #return false if unable to move
-    return false if no_move?(new_row, new_column)
+    
+    super
     #return false if rook is blocked
     return false if is_obstructed?(new_row, new_column)
     #returns only true if moved in a column or row and it is not obstructed or a no move 

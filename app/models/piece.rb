@@ -29,7 +29,7 @@ class Piece < ApplicationRecord
   #checks for valid move
   def valid_move?(new_row, new_column)
     return false if no_move?(new_row, new_column)
-    return false unless proper_length?(new_row, new_column)
+    #return false unless proper_length?(new_row, new_column)
     true
   end
 

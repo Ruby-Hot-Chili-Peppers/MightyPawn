@@ -15,7 +15,7 @@ class Queen < Piece
     delta_row = (new_row - position_row).abs
     delta_col = (new_column - position_column).abs
     
-    return true if (delta_row)/(delta_col) === 1 
+    return true if delta_row == delta_col 
     
     #If we don't have a valid move return false by default
     return false 
