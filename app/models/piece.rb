@@ -6,6 +6,8 @@ class Piece < ApplicationRecord
     position_row == new_row && position_column == new_column
   end
 
+  #return true if piece moves out of game boundaries and false if it doesn't
+
   def out_of_boundary?(new_row, new_column)
     new_row < 0 || new_row > 7 || new_column < 0 || new_column > 7
   end
@@ -32,9 +34,9 @@ class Piece < ApplicationRecord
    
   #checks for valid move
   def valid_move?(new_row, new_column)
-    return false if no_move?(new_row, new_column)
-    return false if no_move?(new_row, new_column)
     return false if out_of_boundary?(new_row, new_column)
+    return false if no_move?(new_row, new_column)
+    return true
   end
 
   def array_position(init, final)
@@ -68,6 +70,7 @@ class Piece < ApplicationRecord
 
     #invalid input case
     raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
+    
   end
 
   #Capture_Logic
