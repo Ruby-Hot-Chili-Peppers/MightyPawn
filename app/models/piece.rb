@@ -5,6 +5,11 @@ class Piece < ApplicationRecord
   def no_move?(new_row, new_column)
     position_row == new_row && position_column == new_column
   end
+
+  #return true if piece moves out of game boundaries and false if it doesn't
+  def out_of_boundary?(new_row, new_column)
+    new_row < 0 || new_row > 7 || new_column < 0 || new_column > 7
+  end
    
   #check if piece moves to occupied space
   def occupied_space?
@@ -28,6 +33,7 @@ class Piece < ApplicationRecord
    
   #checks for valid move
   def valid_move?(new_row, new_column)
+    return false if out_of_boundary?(new_row, new_column)
     return false if no_move?(new_row, new_column)
     #return false unless proper_length?(new_row, new_column)
     true
