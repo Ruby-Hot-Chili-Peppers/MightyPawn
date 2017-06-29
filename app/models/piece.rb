@@ -68,6 +68,7 @@ class Piece < ApplicationRecord
 
     #invalid input case
     raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
+    
   end
 
   #Capture_Logic
@@ -77,7 +78,7 @@ class Piece < ApplicationRecord
       if piece.position_row == new_row && piece.position_column == new_column
         if piece.color == color
           #We can't move to a place where our own pieces are!
-          puts "ERROR"
+          raise RuntimeError, "You can't capture your own piece!"
         else
           #Setting to nil to indicate a piece has been captured
           piece.position_row = nil
