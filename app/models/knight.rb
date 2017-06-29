@@ -4,9 +4,13 @@ class Knight < Piece
   end
 
    #should return false if move is greater than 1 space
-  def proper_length?(new_row, new_column)
+
+
+  def valid_move?(new_row, new_column)
+    super
     delta_row = (new_row - position_row).abs
     delta_col = (new_column - position_column).abs
-    ((delta_row == 1) && (delta_col == 2)) || ((delta_row == 2) && (delta_col == 1))
+    return false unless ((delta_row == 1) && (delta_col == 2)) || ((delta_row == 2) && (delta_col == 1))
+    true
   end
 end 
