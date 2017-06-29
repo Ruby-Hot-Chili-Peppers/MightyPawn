@@ -7,7 +7,7 @@ class Knight < Piece
 
 
   def valid_move?(new_row, new_column)
-    super
+    return false if super == false
     delta_row = (new_row - position_row).abs
     delta_col = (new_column - position_column).abs
     return false unless ((delta_row == 1) && (delta_col == 2)) || ((delta_row == 2) && (delta_col == 1))

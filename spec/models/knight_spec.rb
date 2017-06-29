@@ -50,6 +50,7 @@ RSpec.describe Knight, type: :model do
 
         it 'returns false if out of bounds for new_row' do
           #2 down then left and out of bounds
+          expect(@knight.out_of_boundary?(-2,0)).to be true
           expect(@knight.valid_move?(-2,0)).to be false
         end
 
@@ -57,11 +58,7 @@ RSpec.describe Knight, type: :model do
           # reposition knight
           @knight.position_row = 0
           @knight.position_column = 0
-          #puts " for in bound case should return false"
-          #p @knight.out_of_boundary?(0,2)
-          #puts " for out of bound case should return true"
-          #p @knight.out_of_boundary?(-2,2)
-          #2 down then right and out of bounds
+          expect(@knight.out_of_boundary?(2,-1)).to be true
           expect(@knight.valid_move?(2,-1)).to be false
         end
 
