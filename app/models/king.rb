@@ -10,4 +10,10 @@ class King < Piece
     (delta_row <= 1) && (delta_col <= 1) 
   end
 
+  def valid_move?(new_row, new_column)
+    return false if super == false
+    return false unless proper_length?(new_row, new_column)
+    return true
+  end
+
 end
