@@ -7,6 +7,7 @@ class Piece < ApplicationRecord
   end
 
   #return true if piece moves out of game boundaries and false if it doesn't
+
   def out_of_boundary?(new_row, new_column)
     new_row < 0 || new_row > 7 || new_column < 0 || new_column > 7
   end
@@ -35,8 +36,7 @@ class Piece < ApplicationRecord
   def valid_move?(new_row, new_column)
     return false if out_of_boundary?(new_row, new_column)
     return false if no_move?(new_row, new_column)
-    #return false unless proper_length?(new_row, new_column)
-    true
+    return true
   end
 
   def array_position(init, final)
