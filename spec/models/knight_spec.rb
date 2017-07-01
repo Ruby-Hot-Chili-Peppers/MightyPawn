@@ -19,6 +19,20 @@ RSpec.describe Knight, type: :model do
         end
       end
 
+      context 'out_of_boundary?' do 
+        it 'returns true if out of bounds for new_row' do
+          #2 down then left and out of bounds
+          expect(@knight.out_of_boundary?(-2,0)).to be true
+        end
+
+        it 'returns true if out of bounds for new_column' do
+          # reposition knight
+          @knight.position_row = 0
+          @knight.position_column = 0
+          expect(@knight.out_of_boundary?(2,-1)).to be true
+        end
+      end
+
       context 'valid_move?' do 
         it 'returns true for L space vertical' do
           #2 up then left
@@ -50,7 +64,6 @@ RSpec.describe Knight, type: :model do
 
         it 'returns false if out of bounds for new_row' do
           #2 down then left and out of bounds
-          expect(@knight.out_of_boundary?(-2,0)).to be true
           expect(@knight.valid_move?(-2,0)).to be false
         end
 
@@ -58,7 +71,6 @@ RSpec.describe Knight, type: :model do
           # reposition knight
           @knight.position_row = 0
           @knight.position_column = 0
-          expect(@knight.out_of_boundary?(2,-1)).to be true
           expect(@knight.valid_move?(2,-1)).to be false
         end
 

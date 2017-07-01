@@ -3,9 +3,6 @@ class Knight < Piece
     game.white_player_id == user_id ? '&#9816;' : '&#9822;'  
   end
 
-   #should return false if move is greater than 1 space
-
-
   def valid_move?(new_row, new_column)
     return false if super == false
     delta_row = (new_row - position_row).abs
