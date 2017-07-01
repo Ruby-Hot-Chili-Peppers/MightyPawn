@@ -9,13 +9,21 @@
 <h1> Available Games </h1>
 
 <% @available.each do |game| %>
-  <h2 class="text-center"> 
-    <%= link_to "Game #{game.id}", game_path(game) %> 
-    <br>
-  </h2>
+  <% if current_user %>
+    <% if game.white_player_id != current_user.id %>
+      <h2 class="text-center"> 
+        <%= link_to "Game #{game.id}", game_path(game) %> 
+        <br>
+      </h2>
+    <% end %>
+  <% else %>
+      <h2 class="text-center"> 
+        <%= link_to "Game #{game.id}", new_user_session_path %>
+      </h2>
+  <% end %>
 <% end %>
 
-<h1> Current Games </h1>
+<h1> Your Current Games </h1>
 <% if current_user %>
   <% @current.each do |game| %>
     <% if current_user.id == game.white_player_id || current_user.id == game.black_player_id %>

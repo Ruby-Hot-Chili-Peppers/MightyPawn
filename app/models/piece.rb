@@ -7,6 +7,7 @@ class Piece < ApplicationRecord
   end
 
   #return true if piece moves out of game boundaries and false if it doesn't
+
   def out_of_boundary?(new_row, new_column)
     new_row < 0 || new_row > 7 || new_column < 0 || new_column > 7
   end
@@ -62,7 +63,7 @@ class Piece < ApplicationRecord
       return Piece.exists?(position_row: row_range, position_column: col_init)
 
       #diagonal case
-    elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
+    elsif (row_final - row_init).abs == (col_final - col_init).abs
       return Piece.exists?(position_row: row_range, position_column: col_range)
     end
 
