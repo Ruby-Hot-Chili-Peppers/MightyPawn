@@ -57,15 +57,15 @@ class Piece < ApplicationRecord
 
     #horizonal case
     if row_init == row_final
-      return Piece.exists?(position_row: row_init, position_column: col_range)
+      return Piece.exists?(position_row: row_init, position_column: col_range, game_id: game_id)
 
       #vertical case
     elsif col_init == col_final 
-      return Piece.exists?(position_row: row_range, position_column: col_init)
+      return Piece.exists?(position_row: row_range, position_column: col_init, game_id: game_id)
 
       #diagonal case
     elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
-      return Piece.exists?(position_row: row_range, position_column: col_range)
+      return Piece.exists?(position_row: row_range, position_column: col_range, game_id: game_id)
     end
 
     #invalid input case
