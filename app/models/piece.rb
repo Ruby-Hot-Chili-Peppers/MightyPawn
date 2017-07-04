@@ -63,13 +63,8 @@ class Piece < ApplicationRecord
       return Piece.exists?(position_row: row_range, position_column: col_init, game_id: game_id)
 
       #diagonal case
-<<<<<<< HEAD
     elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
       return Piece.exists?(position_row: row_range, position_column: col_range, game_id: game_id)
-=======
-    elsif (row_final - row_init).abs == (col_final - col_init).abs
-      return Piece.exists?(position_row: row_range, position_column: col_range)
->>>>>>> master
     end
 
     #invalid input case
