@@ -76,15 +76,9 @@ class Piece < ApplicationRecord
   def move_to!(new_row, new_column)
     @pieces = Game.find(game_id).pieces
     @pieces.each do |piece|
-      if piece.position_row == new_row && piece.position_column == new_column
-        if piece.color == color
-          #We can't move to a place where our own pieces are!
-          raise RuntimeError, "You can't capture your own piece!"
-        else
-          #Setting to nil to indicate a piece has been captured
-          piece.position_row = nil
-          piece.position_column = nil
-        end
+      if piece.position_row == new_row && piece.position_column == new_column && piece.color != color
+        piece.position_row = nil
+        piece.position_column = nil
       end
     end
   end

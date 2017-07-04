@@ -9,16 +9,10 @@ class PiecesController < ApplicationController
     #begin
       @piece = Piece.find(params[:id])
       @game = Game.find(@piece.game_id)
-      puts " "
-      puts " y coordinate type"
-      p params[:y_coord]
-      p params[:y_coord].to_i
-      p @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
-      puts @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
-      puts " "
-      #puts Piece.find(position_row: params[:y_coord], position_column: params[:x_coord], game_id: game_id)
-      puts " "
       if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
+        #will take piece off the board if captured, if not captured, this will do nothing
+        @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i)
+        #update the current pieces position
         @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
         redirect_to game_path(@game)
       else
