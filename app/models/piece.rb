@@ -68,7 +68,7 @@ class Piece < ApplicationRecord
     end
 
     #invalid input case
-    raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
+    raise RuntimeError, "invalid input. Not diagonal, horizontal, or vertical."
     
   end
 
@@ -79,6 +79,8 @@ class Piece < ApplicationRecord
       if piece.position_row == new_row && piece.position_column == new_column && piece.color != color
         piece.position_row = nil
         piece.position_column = nil
+      else
+        raise RuntimeError, "You can't capture your own piece!!!"
       end
     end
   end
