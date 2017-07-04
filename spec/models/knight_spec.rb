@@ -8,7 +8,7 @@ RSpec.describe Knight, type: :model do
     @knight = Knight.first #white Knight @ position_row: 0, position_column: 1
   end
 
-  describe "Knight\'s movement" do
+  describe "\'s movement" do
       context 'no_move?' do 
         it 'returns true for no move' do
           expect(@knight.no_move?(0,1)).to be true
@@ -19,38 +19,17 @@ RSpec.describe Knight, type: :model do
         end
       end
 
-      context 'proper_length?' do 
-        it 'returns true for L space vertical' do
-          #2 up then left
-          expect(@knight.proper_length?(2,0)).to be true
-          #2 up then right
-          expect(@knight.proper_length?(2,2)).to be true
-          #2 down then left
-          expect(@knight.proper_length?(-2,0)).to be true
-          #2 down then right
-          expect(@knight.proper_length?(-2,2)).to be true
+      context 'out_of_boundary?' do 
+        it 'returns true if out of bounds for new_row' do
+          #2 down then left and out of bounds
+          expect(@knight.out_of_boundary?(-2,0)).to be true
         end
 
-         it 'returns true for L space horizontal' do
-          #2 right then up
-          expect(@knight.proper_length?(1,3)).to be true
-          #2 right then down
-          expect(@knight.proper_length?(-1,3)).to be true
-          #2 left then up
-          expect(@knight.proper_length?(1,-1)).to be true
-          #2 left then down
-          expect(@knight.proper_length?(-1,-1)).to be true
-        end
-
-        it 'returns false for none L space' do
-          #horizontal 1 step
-          expect(@knight.proper_length?(0,2)).to be false
-          #vertical 1 step
-          expect(@knight.proper_length?(1,1)).to be false
-          #diagonal 1 step
-          expect(@knight.proper_length?(1,2)).to be false
-          #2 right then 2 up
-          expect(@knight.proper_length?(2,3)).to be false
+        it 'returns true if out of bounds for new_column' do
+          # reposition knight
+          @knight.position_row = 0
+          @knight.position_column = 0
+          expect(@knight.out_of_boundary?(2,-1)).to be true
         end
       end
 
@@ -83,11 +62,19 @@ RSpec.describe Knight, type: :model do
           expect(@knight.valid_move?(1,0)).to be true
         end
 
-        it 'returns false for invalid move' do
+        it 'returns false if out of bounds for new_row' do
           #2 down then left and out of bounds
           expect(@knight.valid_move?(-2,0)).to be false
-          #2 down then right and out of bounds
-          expect(@knight.valid_move?(-2,2)).to be false
+        end
+
+        it 'returns false if out of bounds for new_column' do
+          # reposition knight
+          @knight.position_row = 0
+          @knight.position_column = 0
+          expect(@knight.valid_move?(2,-1)).to be false
+        end
+
+        it 'returns false for invalid move' do
           #horizontal 1 step
           expect(@knight.valid_move?(0,2)).to be false
           #vertical 1 step

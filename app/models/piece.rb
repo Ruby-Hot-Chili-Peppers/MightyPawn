@@ -36,7 +36,6 @@ class Piece < ApplicationRecord
   def valid_move?(new_row, new_column)
     return false if out_of_boundary?(new_row, new_column)
     return false if no_move?(new_row, new_column)
-    return true
   end
 
   def array_position(init, final)
