@@ -22,7 +22,7 @@ class PiecesController < ApplicationController
         @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
         redirect_to game_path(@game)
       else
-        raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
+        raise RuntimeError, "invalid input. Not diagonal, horizontal, or vertical."
         #raise ActionController::RoutingError.new("Invalid move for piece due to obstruction, out of bounds or not correct. Please try another position.")
       end
     #rescue StandardError => e
