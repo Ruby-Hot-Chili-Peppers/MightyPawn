@@ -9,7 +9,7 @@ RSpec.describe PiecesController, type: :controller do
 
   describe "pieces#update" do
     context "when valid_move? returns false" do
-      it "responds with flash message & redirect to piece show page due to obstruction" do
+      it "responds with flash message & redirects to piece show page due to obstruction" do
         piece = Rook.first #white Rook @ position_row: 0, position_column: 0
 
         #based on how the links in the html show piece is setup, new parameters are used like so:
@@ -22,7 +22,7 @@ RSpec.describe PiecesController, type: :controller do
     end
 
     context "when valid_move? returns true" do
-      it "piece position is updated successfully & redirect to game show page" do
+      it "piece position is updated successfully & redirected to game show page" do
         piece = Pawn.first #white pawn @ position_row: 1, position_column: 0
    
         patch :update, params: {id: piece.id, y_coord: 3, x_coord: 0, moves: piece.moves + 1}
@@ -34,15 +34,26 @@ RSpec.describe PiecesController, type: :controller do
     end
 
     context "move_to!" do
-      it "does not update the piece position if a piece of the same color is present" do
+      it "does not capture the piece if the desired position is occupied by the same color" do
+        white_pawn1 = Pawn.second #located @ (1,1)
         #another piece of the same color exists in the position we want to move to
-        #my piece does not update position
-        #possibly return a flash message and redirect to the piece page
+        white_pawn2 = Pawn.third #(located @(1,2)
+
+        expect{ white_pawn1.move_to!(1,2) }.to raise_error(RuntimeError)
+        
+        #The piece in the desired position does not update its coordinates
+        expect([white_pawn2.position_row, white_pawn2.position_column]).to eq [1,2]
       end
 
-      it "captures the opposing team piece if that position is occupied" do
+      it "captures the opposing team piece if the desired position is occupied by opposing team" do
         #capture succeeds tnat that opponent piece has nil for position 
-        #my piece has that opponent's position
+        white_pawn1 = Pawn.second #located @(1,1)
+        black_pawn1 = Pawn.last #located @(6,7)
+
+        white_pawn1.move_to!(6,7)
+
+        #the opposing piece should have its coordinates changed to nil, nil 
+        expect([black_pawn1.position_row, black_pawn1.position_column]).to eq [nil,nil]
       end
     end
   end

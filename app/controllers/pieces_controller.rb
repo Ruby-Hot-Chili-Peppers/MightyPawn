@@ -16,7 +16,7 @@ class PiecesController < ApplicationController
       @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
       redirect_to game_path(@game)
     else
-      redirect_to piece_path(@piece), alert: "Invalid move for piece due to obstruction, out of bounds or not correct. Please try another position."
+      redirect_to piece_path(@piece), alert: "Invalid move for piece. Please try again."
     end
   
   end

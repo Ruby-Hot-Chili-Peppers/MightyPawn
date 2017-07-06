@@ -77,14 +77,10 @@ class Piece < ApplicationRecord
     @pieces = Game.find(game_id).pieces
     @pieces.each do |piece|
       if piece.position_row == new_row && piece.position_column == new_column && piece.color != color
-        piece.position_row = nil
-        piece.position_column = nil
-      elsif piece.position_row == new_row && piece.position_column == new_column && piece.color == color
+        piece.update_attributes(position_row: nil, position_column: nil)
+      elsif piece.position_row == new_row && piece.position_column == new_column 
         raise RuntimeError, "You can't capture your own piece!!!"
-      else
-        #when new position has no piece on it, return nothing
       end
     end
   end
-
 end
