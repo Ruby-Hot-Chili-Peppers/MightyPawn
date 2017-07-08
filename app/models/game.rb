@@ -69,5 +69,35 @@ class Game < ApplicationRecord
     
     pieces_hash
   end
+  
+    #check if move puts opponent in check
+  def check?
+    #return false if beginning_of_game?
+    #create storage of all game peices
+    white_king = King.find_by(color: 'white')
+    black_king = King.find_by(color: 'black')
+    white_pieces = Piece.where(color: 'white')
+    black_pieces = Piece.where(color: 'black')
+    #check everygame piece if it is valid move on the king, if so the king is in check otherwise it is not
+    self.pieces.each do |piece|
+      #checks if a piece could move to the king spot
+      black_pieces.each do | black_piece |
+        if black_piece.valid_move?(white_king.position_row, white_king.position_column) 
+         return true
+        end 
+      end
+      white_pieces.each do |white_piece|
+        if  white_piece.valid_move?(black_king.position_row, black_king.position_column)  
+          return true
+        end
+      end
+    
+    #end
+    
+    return false  
+  end
 
+  def beginning_of_game?
+    self.pieces.all? { | piece | piece.moves == 0 }
+  end  
 end

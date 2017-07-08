@@ -6,9 +6,7 @@ class Queen < Piece
   #should return false if queen unable to move
   def valid_move?(new_row, new_column)
     #return false if unable to move
-    return false if no_move?(new_row, new_column)
-    #return false if queen is blocked
-    return false if is_obstructed?(new_row, new_column)
+    return false if !super
     #returns only true if moved in a diagonal or a row or column unblocked
     
     return true if (new_row == self.position_row) || (new_column == self.position_column)

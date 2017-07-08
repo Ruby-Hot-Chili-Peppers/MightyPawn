@@ -42,7 +42,7 @@ class Piece < ApplicationRecord
   def array_position(init, final)
     if init <= final
       array = (init...final).to_a
-      array = array[1,array.length]
+      array = array[1,array.length-1]
     else
       array = init.downto(final).to_a
       array = array[1, array.length-2]
@@ -55,22 +55,15 @@ class Piece < ApplicationRecord
     row_range = array_position(row_init, row_final)
     col_range = array_position(col_init, col_final)
 
-    #horizonal case
-    if row_init == row_final
-      return Piece.exists?(position_row: row_init, position_column: col_range)
-
-      #vertical case
-    elsif col_init == col_final 
-      return Piece.exists?(position_row: row_range, position_column: col_init)
-
-      #diagonal case
-    elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
-      return Piece.exists?(position_row: row_range, position_column: col_range)
+    if row_init == row_final #horizonal case
+      Piece.exists?(position_row: row_init, position_column: col_range)
+    elsif col_init == col_final  #vertical case
+      Piece.exists?(position_row: row_range, position_column: col_init)
+    elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1 #diagonal case
+      Piece.exists?(position_row: row_range, position_column: col_range)
+    else
+      true
     end
-
-    #invalid input case
-    raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
-    
   end
 
   #Capture_Logic

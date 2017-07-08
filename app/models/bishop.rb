@@ -7,9 +7,7 @@ class Bishop < Piece
   def valid_move?(new_row, new_column)
     #return false if unable to move
     #return false if no_move?(new_row, new_column)
-    super
-  
-  
+    return false if !super
     #return false if bishop is blocked
     return false if is_obstructed?(new_row, new_column)
     #returns only true if moved in a diagonal
