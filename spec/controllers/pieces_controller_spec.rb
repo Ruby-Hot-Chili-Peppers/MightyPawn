@@ -38,8 +38,10 @@ RSpec.describe PiecesController, type: :controller do
         piece = Rook.first #white Rook @ position_row: 0, position_column: 0
         piece2 = Pawn.first #white pawn @ position_row: 1, position_column: 0
 
-        expect{ patch :update, 
-          params: {id: piece.id, y_coord: 1, x_coord: 0, moves: piece.moves + 1} }.to raise_error(RuntimeError)        
+        patch :update, params: {id: piece.id, y_coord: 1, x_coord: 0, moves: piece.moves + 1}
+
+        expect(flash[:alert]).to be_present
+        expect(response).to redirect_to piece_path(piece)        
         #The piece in the desired position does not update its coordinates
         expect([piece2.position_row, piece2.position_column]).to eq [1,0]
       end
