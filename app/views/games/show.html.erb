@@ -1,6 +1,40 @@
+<script>
+function init() {
+  $('a').draggable({
+    containment: 'table',
+    scroll: false,
+    start: function( event, ui) {
+      $.ajaxSetup({ cache: false });
+      href = this.href;      
+    },
+    drag: function( event, ui ) {
+      xCoord = $('.ui-droppable-hover').data('x-position');
+      yCoord = $('.ui-droppable-hover').data('y-position');
+    },
+    stop: function( event,ui ) {
+        $.ajax({
+          type: "PUT",
+          url: href,
+          data: {
+            x_coord: xCoord, 
+            y_coord: yCoord
+          }
+        });
+      window.location.reload(true);
+    }
+  });
+
+  $('tr td').droppable({
+    greedy: true
+  });
+};
+
+$( init );
+</script>
+
 <h1> WELCOME TO YOUR GAME MWAHAHAHAH </h1>
 <br>
-<br>
+<br>  
 <br>
 <br>
 
@@ -8,17 +42,17 @@
 <%(0..7).reverse_each do |position_row|%>
   <tr class= 'position_row'>
     <%(0..7).each do |position_column|%>
-      <td class= 'position_column' data-x-position'<%=position_column%>' data-y-position'<%=position_row%>'>
+      <td class= 'position_column' data-x-position='<%=position_column%>' data-y-position='<%=position_row%>'>
         <div class='chess_pieces'>
           <%piece = @game.data_method[position_column][position_row]%>
-          <%=link_to piece.symbol.html_safe, piece_path(piece) if piece.present? %>
+          <%=link_to piece.symbol.html_safe, piece_path(piece), onclick: 'return false' if piece.present?%>
         </div>
       </td>
     <% end %>
   </tr>
 <% end %>
 <table>
-
+<div id="info"></div>
 <div class="col-12 text-center">
   <% if @game.black_player_id == nil && @game.white_player_id != current_user.id %>
     <%= link_to 'Join', game_path, method: :put, class: 'btn btn-primary btn-large' %>
