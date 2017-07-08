@@ -1,9 +1,4 @@
-class PiecesController < ApplicationController
-
-  def show
-    @piece = Piece.find(params[:id])
-    @game = Game.find(@piece.game_id)
-  end
+class PiecesController < ApplicationController  
 
   def update
     @piece = Piece.find(params[:id])

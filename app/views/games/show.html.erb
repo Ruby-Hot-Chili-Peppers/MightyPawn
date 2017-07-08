@@ -52,7 +52,6 @@ $( init );
   </tr>
 <% end %>
 <table>
-<div id="info"></div>
 <div class="col-12 text-center">
   <% if @game.black_player_id == nil && @game.white_player_id != current_user.id %>
     <%= link_to 'Join', game_path, method: :put, class: 'btn btn-primary btn-large' %>
