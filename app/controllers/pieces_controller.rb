@@ -9,13 +9,16 @@ class PiecesController < ApplicationController
         #will take piece off the board if captured, if not captured, this will do nothing
         @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i)
       rescue Exception => e
+        #doesn't work
         return flash.notice =  e.message
       end
       #update the current pieces position
       @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
-      render plain: 'updated!'
+      #doesn't work
+      flash[:success] = 'Updated!'
     else
-      flash.notice =  "Invalid move for piece. Please try again."
+      #doesn't work
+      redirect_to game_path(@game), :flash => { :error => "Invalid move!" }
     end
   
   end
