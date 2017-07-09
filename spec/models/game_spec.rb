@@ -55,9 +55,7 @@ RSpec.describe Game, type: :model do
         #put rook infront of king it should return true if the rook has valid move to the king 
         @pawn_last.update_attributes(position_row: 3, position_column: 3, moves: 7)
         @pawn_last.reload
-        p @pawn_last
         King.first.update_attributes(position_row: 2, position_column: 4)
-        puts @pawn_last.valid_move?(0,4)
         expect(@game.check?).to be true 
       end
       
