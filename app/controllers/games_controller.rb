@@ -18,7 +18,9 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
+    @pieces = Piece.where(game_id: @game.id, color: "black")
     @game.update_attributes(black_player_id: current_user.id)
+    @pieces.update_all(user_id: current_user.id)
     redirect_to game_path(@game)
   end
 
