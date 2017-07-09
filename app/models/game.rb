@@ -72,17 +72,24 @@ class Game < ApplicationRecord
   
     #check if move puts opponent in check
   def check?
+    puts "check started"
     #return false if beginning_of_game?
     #create storage of all game peices
     white_king = King.find_by(color: 'white')
+    p white_king
     black_king = King.find_by(color: 'black')
     white_pieces = Piece.where(color: 'white')
     black_pieces = Piece.where(color: 'black')
+    p black_pieces.first
     #check everygame piece if it is valid move on the king, if so the king is in check otherwise it is not
-    self.pieces.each do |piece|
+    #puts black_pieces.first.valid_move?(white_king.position_row, white_king.position_column) 
+    puts " "
+    puts Knight.where(color: 'black').first.valid_move?(0,4)
       #checks if a piece could move to the king spot
       black_pieces.each do | black_piece |
+        p black_piece
         if black_piece.valid_move?(white_king.position_row, white_king.position_column) 
+         puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
          return true
         end 
       end
@@ -92,12 +99,13 @@ class Game < ApplicationRecord
         end
       end
     
-    #end
-    
+   
+    puts "test returns false at this point"
     return false  
   end
 
   def beginning_of_game?
     self.pieces.all? { | piece | piece.moves == 0 }
   end  
+
 end
