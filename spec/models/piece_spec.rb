@@ -75,27 +75,27 @@ RSpec.describe Piece, type: :model do
   end
 
   describe "move_to!" do
-      it "does not capture the piece if the desired position is occupied by the same color" do
-        white_pawn1 = Pawn.second #located @ (1,1)
-        #another piece of the same color exists in the position we want to move to
-        white_pawn2 = Pawn.third #(located @(1,2)
+    it "does not capture the piece if the desired position is occupied by the same color" do
+      white_pawn1 = Pawn.second #located @ (1,1)
+      #another piece of the same color exists in the position we want to move to
+      white_pawn2 = Pawn.third #(located @(1,2)
 
-        expect{ white_pawn1.move_to!(1,2) }.to raise_error(RuntimeError)
-        
-        #The piece in the desired position does not update its coordinates
-        expect([white_pawn2.position_row, white_pawn2.position_column]).to eq [1,2]
-      end
-
-      it "captures the opposing team piece if the desired position is occupied by opposing team" do
-        #capture succeeds tnat that opponent piece has nil for position 
-        white_pawn1 = Pawn.second #located @(1,1)
-        black_pawn1 = Pawn.last #located @(6,7)
-
-        white_pawn1.move_to!(6,7)
-
-        black_pawn1.reload
-        #the opposing piece should have its coordinates changed to nil, nil 
-        expect([black_pawn1.position_row, black_pawn1.position_column]).to eq [nil,nil]
-      end
+      expect{ white_pawn1.move_to!(1,2) }.to raise_error(RuntimeError)
+      
+      #The piece in the desired position does not update its coordinates
+      expect([white_pawn2.position_row, white_pawn2.position_column]).to eq [1,2]
     end
+
+    it "captures the opposing team piece if the desired position is occupied by opposing team" do
+      #capture succeeds tnat that opponent piece has nil for position 
+      white_pawn1 = Pawn.second #located @(1,1)
+      black_pawn1 = Pawn.last #located @(6,7)
+
+      white_pawn1.move_to!(6,7)
+
+      black_pawn1.reload
+      #the opposing piece should have its coordinates changed to nil, nil 
+      expect([black_pawn1.position_row, black_pawn1.position_column]).to eq [nil,nil]
+    end
+  end
 end
