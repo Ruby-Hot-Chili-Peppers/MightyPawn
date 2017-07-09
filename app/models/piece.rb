@@ -53,7 +53,7 @@ class Piece < ApplicationRecord
     col_init = self.position_column
     row_range = array_position(row_init, row_final)
     col_range = array_position(col_init, col_final)
-
+  
     #horizonal case
     if row_init == row_final
       return Piece.exists?(position_row: row_init, position_column: col_range)

@@ -72,35 +72,41 @@ class Game < ApplicationRecord
   
     #check if move puts opponent in check
   def check?
-    puts "check started"
+    #puts "check started"
     #return false if beginning_of_game?
     #create storage of all game peices
     white_king = King.find_by(color: 'white')
-    p white_king
+    #p white_king
     black_king = King.find_by(color: 'black')
     white_pieces = Piece.where(color: 'white')
     black_pieces = Piece.where(color: 'black')
-    p black_pieces.first
+    #p black_pieces.first
     #check everygame piece if it is valid move on the king, if so the king is in check otherwise it is not
     #puts black_pieces.first.valid_move?(white_king.position_row, white_king.position_column) 
-    puts " "
-    puts Knight.where(color: 'black').first.valid_move?(0,4)
+    #puts " "
+    #puts Knight.where(color: 'black').first.valid_move?(0,4)
       #checks if a piece could move to the king spot
       black_pieces.each do | black_piece |
-        p black_piece
-        if black_piece.valid_move?(white_king.position_row, white_king.position_column) 
-         puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
-         return true
-        end 
+        #p black_piece
+        #puts "This is the value of !black_piece.position_row.nil?:"
+        #p  black_piece.position_row.nil? 
+        if !black_piece.position_row.nil? && !black_piece.position_column.nil?
+          if black_piece.valid_move?(white_king.position_row, white_king.position_column)  
+           # puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
+            return true
+          end 
+        end
       end
       white_pieces.each do |white_piece|
-        if  white_piece.valid_move?(black_king.position_row, black_king.position_column)  
-          return true
+        if !white_piece.position_row.nil? && !white_piece.position_column.nil?
+          if  white_piece.valid_move?(black_king.position_row, black_king.position_column)  && !white_piece.nil?
+            return true
+          end
         end
       end
     
    
-    puts "test returns false at this point"
+    #puts "test returns false at this point"
     return false  
   end
 
