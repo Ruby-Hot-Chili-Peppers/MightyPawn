@@ -8,10 +8,12 @@ class Bishop < Piece
     return false if super == false
     #return false if bishop is blocked
     return false if is_obstructed?(new_row, new_column)
-    #returns only true if moved in a diagonal
+   
+    #returns true if moved diagonally
     delta_row = (new_row - position_row).abs
     delta_col = (new_column - position_column).abs
     return true if delta_row == delta_col 
+
     #If we don't have a valid move return false by default
     return false 
   end  

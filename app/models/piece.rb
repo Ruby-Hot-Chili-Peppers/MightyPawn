@@ -68,7 +68,7 @@ class Piece < ApplicationRecord
     end
 
     #invalid input case
-    raise RuntimeError, "invalid input. Not diagonal, horizontal, or vertical."
+    return false
   end
 
   #Capture_Logic

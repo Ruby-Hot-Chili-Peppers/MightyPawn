@@ -68,9 +68,9 @@ RSpec.describe Piece, type: :model do
       expect(check2).to be false
     end
 
-    it 'raises an error if invalid input' do
+    it 'returns false with invalid input' do
       pawn = Piece.where(:color => 'white', :position_row => 0, :position_column => 7 ).first
-      expect{ check = pawn.is_obstructed?(1,2) }.to raise_error(RuntimeError)
+      expect(pawn.is_obstructed?(1,2)).to eq false
     end
   end
 
