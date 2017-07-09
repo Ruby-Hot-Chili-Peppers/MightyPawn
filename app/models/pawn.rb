@@ -5,7 +5,7 @@ class Pawn < Piece
 
   def valid_move?(new_row, new_column)
     #return false if you didnt move of if the move is obstructed
-    return false if no_move?(new_row, new_column)
+    return false if super == false
     return false if is_obstructed?(new_row, new_column)
 
     #------------------------------------WHITE PIECE LOGIC--------------------------------------------#
