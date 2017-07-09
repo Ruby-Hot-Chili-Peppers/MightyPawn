@@ -36,7 +36,6 @@ class Piece < ApplicationRecord
   def valid_move?(new_row, new_column)
     return false if out_of_boundary?(new_row, new_column)
     return false if no_move?(new_row, new_column)
-    return true
   end
 
   def array_position(init, final)
@@ -55,14 +54,18 @@ class Piece < ApplicationRecord
     row_range = array_position(row_init, row_final)
     col_range = array_position(col_init, col_final)
 
-    if row_init == row_final #horizonal case
-      Piece.exists?(position_row: row_init, position_column: col_range)
-    elsif col_init == col_final  #vertical case
-      Piece.exists?(position_row: row_range, position_column: col_init)
-    elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1 #diagonal case
-      Piece.exists?(position_row: row_range, position_column: col_range)
-    else
-      true
+    #horizonal case
+    if row_init == row_final
+      return Piece.exists?(position_row: row_init, position_column: col_range)
+
+      #vertical case
+    elsif col_init == col_final 
+      return Piece.exists?(position_row: row_range, position_column: col_init)
+
+      #diagonal case
+    elsif (row_final - row_init).abs == (col_final - col_init).abs
+      return Piece.exists?(position_row: row_range, position_column: col_range)
+
     end
   end
 
