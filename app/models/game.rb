@@ -99,8 +99,4 @@ class Game < ApplicationRecord
     return false  
   end
 
-  def beginning_of_game?
-    self.pieces.all? { | piece | piece.moves == 0 }
-  end  
-
 end
