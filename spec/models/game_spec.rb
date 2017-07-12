@@ -13,6 +13,7 @@ RSpec.describe Game, type: :model do
     @queen2 = Queen.last 
     @knight = Knight.last
     @king = King.last
+    @king_white = King.first
     @pawn_last = Pawn.last
     
   end
@@ -81,6 +82,89 @@ RSpec.describe Game, type: :model do
         Knight.all.update_all(position_row: nil, position_column: nil, moves: 1) 
         expect(@game.check?).to be false 
       end 
+      
+      it 'white Queen casuing white king to not be in check' do
+        #Pawn.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+        #Bishop.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+        #Rook.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+        #Queen.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+        #Knight.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+      Queen.first.update_attributes(position_row: 3, position_column: 1, moves: 7)  
+        @pawn_last.update_attributes(position_row: 1, position_column: 3, moves: 7)
+        @pawn_last.reload
+        @king_white.update_attributes(position_row: 0, position_column: 4)
+        @king_white.reload
+        expect(@game.check?).to be true 
+      end
+      
+      
+      it 'bug test white queen causing king to no be in check?' do
+      Queen.first.update_attributes(position_row: 0, position_column: 3, moves: 7)  
+        @pawn_last.update_attributes(position_row: 1, position_column: 3, moves: 7)
+        @pawn_last.reload
+        @king_white.update_attributes(position_row: 0, position_column: 4)
+        @king_white.reload
+        expect(@game.check?).to be true 
+      end
+      
+      it 'bug test white queen causing king to no be in check?' do
+      Queen.first.update_attributes(position_row: nil, position_column: nil, moves: 7)  
+        @pawn_last.update_attributes(position_row: 1, position_column: 3, moves: 7)
+        @pawn_last.reload
+        @king_white.update_attributes(position_row: 0, position_column: 4)
+        @king_white.reload
+        expect(@game.check?).to be true 
+      end
+      
+      it 'bug test white queen causing king to no be in check?' do
+        Queen.all.update_all(position_row: nil, position_column: nil, moves: 8) 
+        @pawn_last.update_attributes(position_row: 1, position_column: 3, moves: 7)
+        @pawn_last.reload
+        @king_white.update_attributes(position_row: 0, position_column: 4)
+        @king_white.reload
+        expect(@game.check?).to be true 
+      end
+      
+      it 'bug test white queen causing king to no be in check?' do
+        Queen.first.update_attributes(position_row: 5, position_column: 5, moves: 7)  
+        @pawn_last.update_attributes(position_row: 1, position_column: 3, moves: 7)
+        @pawn_last.reload
+        @king_white.update_attributes(position_row: 0, position_column: 4)
+        @king_white.reload
+        expect(@game.check?).to be true 
+      end
+      
+      it 'bug test white queen causing king to no be in check?' do
+        Pawn.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+        Queen.first.update_attributes(position_row: 1, position_column: 3, moves: 7)  
+        @pawn_last.update_attributes(position_row: 2, position_column: 3, moves: 7)
+        @pawn_last.reload
+        @king_white.update_attributes(position_row: 1, position_column: 4)
+        @king_white.reload
+        expect(@game.check?).to be true 
+      end
+      
+      it 'bug test white queen causing king to no be in check?' do
+        
+        Queen.first.update_attributes(position_row: 4, position_column: 1, moves: 7)  
+        @pawn_last.update_attributes(position_row: 5, position_column: 1, moves: 7)
+        @pawn_last.reload
+        @king_white.update_attributes(position_row: 4, position_column: 0)
+        @king_white.reload
+        expect(@game.check?).to be true 
+      end
+      
+      it 'bug test white queen on the space to left of the white king causing  it to no be in check?' do
+        
+        Queen.first.update_attributes(position_row: 4, position_column: 0, moves: 7)  
+        @pawn_last.update_attributes(position_row: 5, position_column: 0, moves: 7)
+        @pawn_last.reload
+        @king_white.update_attributes(position_row: 4, position_column: 1)
+        @king_white.reload
+        
+        #byebug
+        expect(@game.check?).to be true 
+      end
       
 
     end

@@ -73,11 +73,10 @@ class Game < ApplicationRecord
     #check if move puts opponent in check
   def check?
 
-    white_king = King.find_by(color: 'white')
-
-    black_king = King.find_by(color: 'black')
-    white_pieces = Piece.where(color: 'white')
-    black_pieces = Piece.where(color: 'black')
+    white_king = King.find_by(color: 'white') # fix this like next line
+    black_king = pieces.find_by(color: 'black', type: 'King')
+    white_pieces = pieces.where(color: 'white')
+    black_pieces = pieces.where(color: 'black')
 
       #checks if a piece could move to the king spot
       black_pieces.each do | black_piece |
