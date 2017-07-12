@@ -64,3 +64,6 @@ source 'https://rails-assets.org' do
 end
 
 gem 'devise'
+
+# For draggable and droppable
+gem 'jquery-ui-rails'
