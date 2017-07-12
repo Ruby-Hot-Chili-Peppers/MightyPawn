@@ -155,7 +155,6 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 4, position_column: 1)
         @king_white.reload
-        #byebug
         expect(@game.check?).to be true 
       end
       
@@ -166,8 +165,6 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_black.update_attributes(position_row: 4, position_column: 1) #black king 
         @king_black.reload
-        
-        #byebug
         expect(@game.check?).to be true 
       end
       
