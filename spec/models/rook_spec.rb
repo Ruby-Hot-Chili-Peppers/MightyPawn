@@ -25,7 +25,7 @@ RSpec.describe Rook, type: :model do
 
     context 'is_obstructed?' do 
       it 'returns true if we are obstructed' do
-        #since rook3 is blocked by a pawn expect to be obsstructed (cannot move from 7,7 to 0,7 since pawns are in the waay)
+        #since rook3 is blocked by a pawn expect to be obsstructed (cannot move from 7,7 to 0,7 since pawns are in the way)
         Pawn.all.update_all(position_row: 6, position_column: 7)  
         expect(@rook3.is_obstructed?(0,7)).to be true
       end

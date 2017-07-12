@@ -41,7 +41,7 @@ class Piece < ApplicationRecord
   def array_position(init, final)
     if init <= final
       array = (init...final).to_a
-      array = array[1,array.length]
+      array = array[1,array.length-1]
     else
       array = init.downto(final).to_a
       array = array[1, array.length-2]
@@ -53,7 +53,7 @@ class Piece < ApplicationRecord
     col_init = self.position_column
     row_range = array_position(row_init, row_final)
     col_range = array_position(col_init, col_final)
-
+  
     #horizonal case
     if row_init == row_final
       return Piece.exists?(position_row: row_init, position_column: col_range, game_id: game_id)
@@ -68,8 +68,7 @@ class Piece < ApplicationRecord
     end
 
     #invalid input case
-    raise RuntimeError, "invalid input. Not diagonal, horizontal, or vertical."
-    
+    return false
   end
 
   #Capture_Logic
