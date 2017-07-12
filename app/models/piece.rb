@@ -56,34 +56,30 @@ class Piece < ApplicationRecord
   
     #horizonal case
     if row_init == row_final
-      return Piece.exists?(position_row: row_init, position_column: col_range)
+      return Piece.exists?(position_row: row_init, position_column: col_range, game_id: game_id)
 
       #vertical case
     elsif col_init == col_final 
-      return Piece.exists?(position_row: row_range, position_column: col_init)
+      return Piece.exists?(position_row: row_range, position_column: col_init, game_id: game_id)
 
       #diagonal case
-    elsif (row_final - row_init).abs == (col_final - col_init).abs
-      return Piece.exists?(position_row: row_range, position_column: col_range)
-
+    elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
+      return Piece.exists?(position_row: row_range, position_column: col_range, game_id: game_id)
     end
+
+    #invalid input case
+    return false
   end
 
   #Capture_Logic
   def move_to!(new_row, new_column)
     @pieces = Game.find(game_id).pieces
     @pieces.each do |piece|
-      if piece.position_row == new_row && piece.position_column == new_column
-        if piece.color == color
-          #We can't move to a place where our own pieces are!
-          raise RuntimeError, "You can't capture your own piece!"
-        else
-          #Setting to nil to indicate a piece has been captured
-          piece.position_row = nil
-          piece.position_column = nil
-        end
+      if piece.position_row == new_row && piece.position_column == new_column && piece.color != color
+        piece.update_attributes(position_row: nil, position_column: nil)
+      elsif piece.position_row == new_row && piece.position_column == new_column 
+        raise RuntimeError, "You can't capture your own piece!!!"
       end
     end
   end
-
 end

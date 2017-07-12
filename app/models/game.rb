@@ -70,30 +70,31 @@ class Game < ApplicationRecord
     pieces_hash
   end
   
-    #check if move puts opponent in check
+  #check if move puts opponent in check
   def check?
 
-    white_king = King.find_by(color: 'white') # fix this like next line
-    black_king = pieces.find_by(color: 'black', type: 'King')
-    white_pieces = pieces.where(color: 'white')
-    black_pieces = pieces.where(color: 'black')
+    white_king = King.find_by(color: 'white', game_id: id)
+    black_king = King.find_by(color: 'black', game_id: id)
+    white_pieces = Piece.where(color: 'white', game_id: id)
+    black_pieces = Piece.where(color: 'black', game_id: id)
 
-      #checks if a piece could move to the king spot
-      black_pieces.each do | black_piece |
-        if !black_piece.position_row.nil? && !black_piece.position_column.nil?
-          if black_piece.valid_move?(white_king.position_row, white_king.position_column)  
-           # puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
-            return true
-          end 
+    #checks if a piece could move to the king spot
+    black_pieces.each do | black_piece |
+      if !black_piece.position_row.nil? && !black_piece.position_column.nil?
+        if black_piece.valid_move?(white_king.position_row, white_king.position_column)  
+         # puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
+          return true
+        end 
+
+      end
+    end
+    white_pieces.each do |white_piece|
+      if !white_piece.position_row.nil? && !white_piece.position_column.nil?
+        if  white_piece.valid_move?(black_king.position_row, black_king.position_column)  && !white_piece.nil?
+          return true
         end
       end
-      white_pieces.each do |white_piece|
-        if !white_piece.position_row.nil? && !white_piece.position_column.nil?
-          if  white_piece.valid_move?(black_king.position_row, black_king.position_column)  && !white_piece.nil?
-            return true
-          end
-        end
-      end
+    end
 
     return false  
   end

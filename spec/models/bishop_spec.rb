@@ -26,25 +26,25 @@ RSpec.describe Bishop, type: :model do
     context 'is_obstructed?' do 
       it 'returns true if we are obstructed' do
         #since bishop3 is blocked by a pawn expect to be obsstructed.
-        Pawn.all.update_all(position_row: 6, position_column: 4)  
+        Pawn.update_all(position_row: 6, position_column: 4)  
         expect(@bishop3.is_obstructed?(2,0)).to be true
       end
 
       it 'returns false if we are not obstructed' do
         #clear the pawns so the bishop can move
-        Pawn.all.update_all(position_row: nil, position_column: nil)
+        Pawn.update_all(position_row: nil, position_column: nil)
         expect(@bishop1.is_obstructed?(1,1)).to be false
       end
     end
 
      context 'valid_move?' do 
       it 'allows us to move  forward if not obstructed' do
-        Pawn.all.update_all(position_row: nil, position_column: nil)
+        Pawn.update_all(position_row: nil, position_column: nil)
         expect(@bishop1.valid_move?(4,6)).to be true
       end
 
       it 'does not allow moving unless straight column or row' do
-        Pawn.all.update_all(position_row: nil, position_column: nil)
+        Pawn.update_all(position_row: nil, position_column: nil)
         #moving rook like bishop checking if valid
         expect(@bishop1.valid_move?(0,1)).to be false
       end

@@ -10,13 +10,16 @@
       <td class= 'position_column' data-x-position'<%=position_column%>' data-y-position'<%=position_row%>'>
         <div class='chess_pieces'>
           <%piece = @game.data_method[position_column][position_row]%>
-
-        <% if piece == @piece %>
-            <div class='highlighted'>
-              <%=piece.symbol.html_safe%>
-            </div>
-        <% elsif piece.present? %>
-          <%=piece.symbol.html_safe%>
+          <% if piece == @piece %>
+              <div class='highlighted'>
+                <%=piece.symbol.html_safe%>
+              </div>
+          <% elsif piece.present? %>
+            <%= link_to piece_path(@piece, params: { x_coord: position_column, y_coord: position_row }),  method: "put" do %>
+              <div class = "empty_space">
+                <%=piece.symbol.html_safe%>
+              </div>
+            <% end %>
         </div>
         <% else %>
           <%= link_to piece_path(@piece, params: { x_coord: position_column, y_coord: position_row }),  method: "put" do %>
