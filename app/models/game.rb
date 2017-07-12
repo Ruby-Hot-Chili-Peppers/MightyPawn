@@ -85,9 +85,9 @@ class Game < ApplicationRecord
          # puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
           return true
         end 
-
       end
     end
+    
     white_pieces.each do |white_piece|
       if !white_piece.position_row.nil? && !white_piece.position_column.nil?
         if  white_piece.valid_move?(black_king.position_row, black_king.position_column)  && !white_piece.nil?
