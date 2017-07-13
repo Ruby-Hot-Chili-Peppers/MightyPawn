@@ -90,7 +90,7 @@ class Game < ApplicationRecord
     
     white_pieces.each do |white_piece|
       if !white_piece.position_row.nil? && !white_piece.position_column.nil?
-        if  white_piece.valid_move?(black_king.position_row, black_king.position_column)  && !white_piece.nil?
+        if  white_piece.valid_move?(black_king.position_row, black_king.position_column)
           return true
         end
       end
@@ -98,5 +98,105 @@ class Game < ApplicationRecord
 
     return false  
   end
+
+  #determines if a player is in checkmate and the game is over
+  def checkmate?(king)
+    #set the color of king 
+    if king.color == 'black'
+        color = 'white'
+    else  
+        color = 'black'
+    end  
+    #should not trigger if game is not in check
+    return false unless check? 
+    color_pieces = Piece.where(color: color, game_id: id)
+    
+    king_is_in_check_counter = 0
+    
+    #note below test the 9 cases if king is still in check and if all avenues for movement are blocked off it is in checkmate
+    #test the case the king moves forward 1 row is it still in check?
+    color_pieces.each do |color_piece|
+      if !color_piece.position_row.nil? && !color_piece.position_column.nil?
+          if color_piece.valid_move?(king.position_row+1,king.position_column)
+          king_is_in_check_counter = king_is_in_check_counter + 1
+          end  
+      end  
+    end  
+    #test the case the king moves backward 1 row is it still in check?
+    color_pieces.each do |color_piece|
+      if !color_piece.position_row.nil? && !color_piece.position_column.nil?
+          if color_piece.valid_move?(king.position_row-1,king.position_column)
+          king_is_in_check_counter = king_is_in_check_counter + 1
+          end  
+      end  
+    end 
+    #test the case the king moves to the left 1 space is it still in check?
+    color_pieces.each do |color_piece|
+      if !color_piece.position_row.nil? && !color_piece.position_column.nil?
+          if color_piece.valid_move?(king.position_row,king.position_column-1)
+          king_is_in_check_counter = king_is_in_check_counter + 1
+          end  
+      end  
+    end 
+    #test the case the king moves to the right 1 space is it still in check?
+    color_pieces.each do |color_piece|
+      if !color_piece.position_row.nil? && !color_piece.position_column.nil?
+          if color_piece.valid_move?(king.position_row,king.position_column+1)
+          king_is_in_check_counter = king_is_in_check_counter + 1
+          end  
+      end  
+    end 
+    
+    #test the case the king moves to the diagonal upper left  is it still in check?
+    color_pieces.each do |color_piece|
+      if !color_piece.position_row.nil? && !color_piece.position_column.nil?
+          if color_piece.valid_move?(king.position_row+1,king.position_column-1)
+          king_is_in_check_counter = king_is_in_check_counter + 1
+          end  
+      end  
+    end 
+    
+    #test the case the king moves to the diagonal upper right  is it still in check?
+    color_pieces.each do |color_piece|
+      if !color_piece.position_row.nil? && !color_piece.position_column.nil?
+          if color_piece.valid_move?(king.position_row+1,king.position_column+1)
+          king_is_in_check_counter = king_is_in_check_counter + 1
+          end  
+      end  
+    end 
+    #test the case the king moves to the diagonal lower leftis it still in check?
+    color_pieces.each do |color_piece|
+      if !color_piece.position_row.nil? && !color_piece.position_column.nil?
+          if color_piece.valid_move?(king.position_row-1,king.position_column-1)
+          king_is_in_check_counter = king_is_in_check_counter + 1
+          end  
+      end  
+    end 
+    
+    #test the case the king moves to the diagonal lower right  is it still in check?
+    color_pieces.each do |color_piece|
+      if !color_piece.position_row.nil? && !color_piece.position_column.nil?
+          if color_piece.valid_move?(king.position_row-1,king.position_column+1)
+          king_is_in_check_counter = king_is_in_check_counter + 1
+          end  
+      end  
+    end 
+  
+
+  if king_is_in_check_counter > 8
+    #not in checkmate  because in one instance the king could move and was not in check
+    return true
+  else
+    #in all nine instance (assuming not on a border) the king could not move without being in check so therefore it is checkmate
+    return false
+  end  
+    
+  end
+  
+  #determines if game is in stalemate and no moves can be made
+  def stalemate?
+    
+  end  
+
 
 end
