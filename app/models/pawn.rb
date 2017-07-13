@@ -69,7 +69,7 @@ class Pawn < Piece
       promotion(new_row, new_column)
     else
       super(new_row, new_column)
-    end
+    endPawn
   end
 
   #check if promotion is posible

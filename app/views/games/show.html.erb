@@ -52,15 +52,15 @@ $( init );
         </hgroup>
         <form action="#" class="promotion-choice">
           <div class="promo-selection-container">
-            <% ['Queen', 'Bishop', 'Rook', 'Knight'].each do |name| %>
-              <div class="promo-selection-choice">              
-                <label for="<%= name.downcase %>">
-                  <% if @game.pieces.piece.type == name %>
-                  <%= piece.symbol%>
-                  <%= name %>
-                  <% end %>
+          <% pieces = @game.pieces %>
+            <% pieces.each do |piece| %>
+              <% if piece.type == Queen || Bishop || Knight || Rook && piece.color == color && piece.game_id == game_id && piece.user_id == current_user%>
+                <div class="promo-selection-choice">              
+                  <label for="<%= piece.type %>">
+                    <%= piece.symbol%>
+              <% end %>
                 </label>
-                <input type="radio" name="piece-type" value="<%= name %>" id="<%= name.downcase %>">
+                <input type="radio" name="piece-type" value="<%= piece %>" id="pawnPromo%>">
               </div>
             <% end %>
         </div>
