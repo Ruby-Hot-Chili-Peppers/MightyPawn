@@ -12,26 +12,6 @@ class Piece < ApplicationRecord
     new_row < 0 || new_row > 7 || new_column < 0 || new_column > 7
   end
    
-  #check if piece moves to occupied space
-  def occupied_space?
-  end
-   
-  #check if piece captures other piece after moving into new space
-  def captured_piece?
-  end
-   
-  #check if move puts opponent in check
-  def check?
-  end
-   
-  #check if moves puts current_user in check 
-  def self_in_check?
-  end
-   
-  #check if move puts opponent in check_mate
-  def check_mate?
-  end
-   
   #checks for valid move
   def valid_move?(new_row, new_column)
     return false if out_of_boundary?(new_row, new_column)
