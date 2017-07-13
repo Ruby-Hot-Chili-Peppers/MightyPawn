@@ -1,8 +1,15 @@
 class Piece < ApplicationRecord
   belongs_to :game
 
-  #checks if piece didn’t move
-  def not_moved?
+  #return true if piece doesn't move and false if it does
+  def no_move?(new_row, new_column)
+    position_row == new_row && position_column == new_column
+  end
+
+  #return true if piece moves out of game boundaries and false if it doesn't
+
+  def out_of_boundary?(new_row, new_column)
+    new_row < 0 || new_row > 7 || new_column < 0 || new_column > 7
   end
    
   #check if piece moves to occupied space
@@ -26,63 +33,53 @@ class Piece < ApplicationRecord
   end
    
   #checks for valid move
-  def valid_move?
-  return false if piece.not_moved?
-  #add more checks
-   
+  def valid_move?(new_row, new_column)
+    return false if out_of_boundary?(new_row, new_column)
+    return false if no_move?(new_row, new_column)
+  end
+
+  def array_position(init, final)
+    if init <= final
+      array = (init...final).to_a
+      array = array[1,array.length-1]
+    else
+      array = init.downto(final).to_a
+      array = array[1, array.length-2]
+    end
   end
 
   def is_obstructed?(row_final, col_final)
     row_init = self.position_row
     col_init = self.position_column
-
-    def array_up(init, final)
-      array = (init...final).to_a
-      array = array[1,array.length]
-    end
-
-    def array_down(init, final)
-      array = init.downto(final).to_a
-      array = array[1, array.length-2]
-    end
-
+    row_range = array_position(row_init, row_final)
+    col_range = array_position(col_init, col_final)
+  
     #horizonal case
     if row_init == row_final
-      if col_init <= col_final #going right
-        col_rng = array_up(col_init, col_final)
-      else #going left
-        col_rng = array_down(col_init, col_final)
-      end
-      return !Piece.exists?(position_row: row_init, position_column: col_rng)
+      return Piece.exists?(position_row: row_init, position_column: col_range, game_id: game_id)
 
       #vertical case
     elsif col_init == col_final 
-      if row_init <= row_final #going up
-        row_rng = array_up(row_init, row_final)
-      else #going down
-        row_rng = array_down(row_init, row_final)
-      end
-      return !Piece.exists?(position_row: row_rng, position_column: col_init)
+      return Piece.exists?(position_row: row_range, position_column: col_init, game_id: game_id)
 
       #diagonal case
     elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
-      if row_init <= row_final #going up
-        row_rng = array_up(row_init, row_final)
-      else #going down
-        row_rng = array_down(row_init, row_final)
-      end
+      return Piece.exists?(position_row: row_range, position_column: col_range, game_id: game_id)
+    end
 
-      if col_init <= col_final #going right
-        col_rng = array_up(col_init, col_final)
-      else  #going left
-        col_rng = array_down(col_init, col_final)
-      end
+    #invalid input case
+    return false
+  end
 
-      return !Piece.exists?(position_row: row_rng, position_column: col_rng)
-    
-      #invalid input case
-    else
-      raise RuntimeError, "invalid input. Not diagnal, horizontal, or vertical."
+  #Capture_Logic
+  def move_to!(new_row, new_column)
+    @pieces = Game.find(game_id).pieces
+    @pieces.each do |piece|
+      if piece.position_row == new_row && piece.position_column == new_column && piece.color != color
+        piece.update_attributes(position_row: nil, position_column: nil)
+      elsif piece.position_row == new_row && piece.position_column == new_column 
+        raise RuntimeError, "You can't capture your own piece!!!"
+      end
     end
   end
 end
