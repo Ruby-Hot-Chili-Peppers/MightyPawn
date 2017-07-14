@@ -82,4 +82,30 @@ class Piece < ApplicationRecord
       end
     end
   end
+
+  def moving_into_check?(new_row, new_column)
+    current_row = self.position_row
+    current_column = self.position_column
+    self.update_attributes(position_row: new_row, position_column: new_column)
+
+    if self.color == "white"
+      my_king = King.find_by(color: "white", game_id: game_id)
+      opposing_pieces = Piece.where(color: "black", game_id: game_id)
+    else
+      my_king = King.find_by(color: "black", game_id: game_id)
+      opposing_pieces = Piece.where(color: "white", game_id: game_id)
+    end
+
+    opposing_pieces.each do | piece |
+      if !piece.position_row.nil? && !piece.position_column.nil?
+        if piece.valid_move?(my_king.position_row, my_king.position_column)  
+         # puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
+          self.update_attributes(position_row: current_row, position_column: current_column)
+          return true
+        end 
+      end
+    end
+    self.update_attributes(position_row: current_row, position_column: current_column)
+    return false
+  end  
 end
