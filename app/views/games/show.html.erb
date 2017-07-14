@@ -32,6 +32,46 @@ function init() {
 $( init );
 </script>
 
+<!-- Initializes modal when pawn is promoted -->
+
+<!-- <script type="text/javascript">
+
+</script>
+ -->
+
+<!-- Modal form for pawn promotion -->
+
+<div class="modal">
+  <input class="modal-state" id="promo-modal" type="checkbox" />
+  <div class="modal-fade-screen">
+    <div class="modal-inner">
+      <div class="modal-close" for="promo-modal"></div>
+        <hgroup>
+          <h4>Pawn Promotion</h4>
+          <h6>Choose Your Piece:</h6>
+        </hgroup>
+        <form action="#" class="promotion-choice">
+          <div class="promo-selection-container">
+          <% pieces = @game.pieces %>
+            <% pieces.each do |piece| %>
+              <% if piece.type == Queen || Bishop || Knight || Rook && piece.color == color && piece.game_id == game_id && piece.user_id == current_user%>
+                <div class="promo-selection-choice">              
+                  <label for="<%= piece.type %>">
+                    <%= piece.symbol%>
+              <% end %>
+                </label>
+                <input type="radio" name="piece-type" value="<%= piece %>" id="pawnPromo%>">
+              </div>
+            <% end %>
+        </div>
+        <div class="promo-selection-submit">
+          <input type="submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <h1> WELCOME TO YOUR GAME MWAHAHAHAH </h1>
 
 <br>
