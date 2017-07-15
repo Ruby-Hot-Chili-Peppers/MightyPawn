@@ -69,7 +69,7 @@ class Pawn < Piece
       promotion(new_row, new_column)
     else
       super(new_row, new_column)
-    endPawn
+    end
   end
 
   #check if promotion is posible
@@ -82,8 +82,4 @@ class Pawn < Piece
     update_attributes(position_row: nil, position_column: nil)
     game.pieces.create(position_row: new_row, position_column: new_column, type: type, color: color, user_id: user_id)
   end
-
-
 end
-
-

@@ -72,6 +72,52 @@ $( init );
   </div>
 </div>
 
+<!-- Modal form for pawn promotion2 -->
+<div class="modal fade" id="promo-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pawn Promotion</h5>
+        <h6>Choose Your Piece:</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="promotion-choice">
+          <div class="promo-selection-container">
+            <% pieces = @game.pieces %>
+              <% pieces.each do |piece| %>
+                <% if piece.type == Queen || Bishop || Knight || Rook && piece.color == color && piece.game_id == game_id && piece.user_id == current_user%>
+                  <div class="promo-selection-choice">              
+                    <label for="<%= piece.type %>">
+                      <%= piece.symbol%>
+                <% end %>
+                  </label>
+                  <input type="radio" name="piece-type" value="<%= piece %>" id="pawnPromo%>">
+                </div>
+              <% end %>
+          </div>
+          <div class="promo-selection-submit">
+            <input type="submit">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#promo-modal">
+    Open Modal 1
+  </button>
+<!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#promo-modal2">
+    Open Modal 2
+  </button>
 <h1> WELCOME TO YOUR GAME MWAHAHAHAH </h1>
 
 <br>
