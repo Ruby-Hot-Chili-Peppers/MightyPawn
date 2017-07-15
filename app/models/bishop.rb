@@ -5,8 +5,10 @@ class Bishop < Piece
   
   #should return false if rook unable to move
   def valid_move?(new_row, new_column)
+
     return false if super == false
     #return false if bishop is blocked
+
     return false if is_obstructed?(new_row, new_column)
    
     #returns true if moved diagonally
