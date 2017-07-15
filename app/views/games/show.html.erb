@@ -13,7 +13,7 @@ function init() {
     },
     stop: function( event,ui ) {
       if ( yCoord == "7" || yCoord == "0") {
-        $('#promo-modal2').modal('toggle');
+        $('#promotion').modal('toggle');
         console.log('This if statement passed');
       };
         $.ajax({
@@ -36,64 +36,42 @@ function init() {
 $( init );
 </script>
 
-<!-- Initializes modal when pawn is promoted -->
+<!-- Modal form for pawn promotion -->
+ <div class="modal fade" id="promotion" tabindex="-1" role="dialog" aria-labelledby="myLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Choose You Piece</h4>
+        </div>
+          <%= simple_form_for @game, url: '#' do |pieces| %>
+            <% pieces = @game.pieces %>
+            <% pieces.each do |piece| %>
 
-<!-- <script type="text/javascript">
+              <% if piece.type == 'Queen' %>
 
-</script>
- -->
+                <label for="<%= piece.type %>">
+                    <%= piece.symbol.html_safe%>
+              <% end %>
 
+            <% end %>
 
-<!-- Modal form for pawn promotion2 -->
-<div class="modal fade" id="promo-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Pawn Promotion</h5>
-        <h6>Choose Your Piece:</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="#" class="promotion-choice">
-          <div class="promo-selection-container">
-                <% ["Bishop", "Rook", "Knight", "Queen"].each do |type| %>
-                <div class="promo-selection-choice">              
-                    <label for="<%= type %>">
-                      <%= type %>
-                  </label>
-                  <input type="radio" name="piece-type" value="<%= type %>" id="pawnPromo%>">
-                </div>
-                <% end %>
-            <!--<% pieces = @game.pieces %>
-              <% pieces.each do |piece| %>
-                <% if piece.type == Queen || Bishop || Knight || Rook && piece.color == color && piece.game_id == game_id && piece.user_id == current_user%>
-                  <div class="promo-selection-choice">              
-                    <label for="<%= piece.type %>">
-                      <%= piece.symbol%>
-                <% end %>
-                  </label>
-                  <input type="radio" name="piece-type" value="<%= piece %>" id="pawnPromo%>">
-                </div>
-              <% end %>-->
-          </div>
-          <div class="promo-selection-submit">
-            <input type="submit">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit">
+            </div>
+          <% end %>
+
+        </div>  
       </div>
     </div>
-  </div>
-</div>
 
 <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#promo-modal2">
-    Open Modal 2
+  <button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#promotion">
+    Open Modal 
   </button>
 <h1> WELCOME TO YOUR GAME MWAHAHAHAH </h1>
 
