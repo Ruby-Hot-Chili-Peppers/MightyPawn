@@ -12,6 +12,10 @@ function init() {
       yCoord = $('.ui-droppable-hover').data('y-position');
     },
     stop: function( event,ui ) {
+      if ( yCoord == "7" || yCoord == "0") {
+        $('#promo-modal2').modal('toggle');
+        console.log('This if statement passed');
+      };
         $.ajax({
           type: "PUT",
           url: href,
@@ -39,38 +43,6 @@ $( init );
 </script>
  -->
 
-<!-- Modal form for pawn promotion -->
-
-<div class="modal">
-  <input class="modal-state" id="promo-modal" type="checkbox" />
-  <div class="modal-fade-screen">
-    <div class="modal-inner">
-      <div class="modal-close" for="promo-modal"></div>
-        <hgroup>
-          <h4>Pawn Promotion</h4>
-          <h6>Choose Your Piece:</h6>
-        </hgroup>
-        <form action="#" class="promotion-choice">
-          <div class="promo-selection-container">
-          <% pieces = @game.pieces %>
-            <% pieces.each do |piece| %>
-              <% if piece.type == Queen || Bishop || Knight || Rook && piece.color == color && piece.game_id == game_id && piece.user_id == current_user%>
-                <div class="promo-selection-choice">              
-                  <label for="<%= piece.type %>">
-                    <%= piece.symbol%>
-              <% end %>
-                </label>
-                <input type="radio" name="piece-type" value="<%= piece %>" id="pawnPromo%>">
-              </div>
-            <% end %>
-        </div>
-        <div class="promo-selection-submit">
-          <input type="submit">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 <!-- Modal form for pawn promotion2 -->
 <div class="modal fade" id="promo-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -118,10 +90,7 @@ $( init );
     </div>
   </div>
 </div>
-<!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#promo-modal">
-    Open Modal 1
-  </button>
+
 <!-- Button trigger modal -->
   <button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#promo-modal2">
     Open Modal 2
