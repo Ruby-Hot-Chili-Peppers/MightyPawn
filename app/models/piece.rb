@@ -84,10 +84,12 @@ class Piece < ApplicationRecord
   end
 
   def moving_into_check?(new_row, new_column)
+    #We will switch to the new coordinates temporarily and see if we are in check!
     current_row = self.position_row
     current_column = self.position_column
     self.update_attributes(position_row: new_row, position_column: new_column)
 
+    #define my king and all the pieces from the other team
     if self.color == "white"
       my_king = King.find_by(color: "white", game_id: game_id)
       opposing_pieces = Piece.where(color: "black", game_id: game_id)
@@ -96,16 +98,20 @@ class Piece < ApplicationRecord
       opposing_pieces = Piece.where(color: "white", game_id: game_id)
     end
 
+    #borrowing this function from check? method
     opposing_pieces.each do | piece |
       if !piece.position_row.nil? && !piece.position_column.nil?
         if piece.valid_move?(my_king.position_row, my_king.position_column)  
-         # puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
+         #We don't want to update attribtues here as it will be done in the controller, so we revert back
           self.update_attributes(position_row: current_row, position_column: current_column)
           return true
         end 
       end
     end
+    #We don't want to update attribtues here as it will be done in the controller, so we revert back
     self.update_attributes(position_row: current_row, position_column: current_column)
     return false
   end  
+
+
 end

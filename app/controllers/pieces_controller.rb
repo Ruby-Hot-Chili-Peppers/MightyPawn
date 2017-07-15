@@ -5,19 +5,23 @@ class PiecesController < ApplicationController
     @game = Game.find(@piece.game_id)
 
     if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
+      #Are we moving ourselves into check? If so, raise an error
+      if @piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
+        flash[:error] = "You can't put your king in check!"
+      end 
+
+      #This calls the capture logic to capture a piece if a piece is on the desired position
       begin
-        #will take piece off the board if captured, if not captured, this will do nothing
         @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i)
       rescue Exception => e
-        #doesn't work
+        #If we try to capture our own piece....
         return flash.notice =  e.message
       end
-      #update the current pieces position
+
+      #If everything works we update the current piece's position
       @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
-      #doesn't work
       flash[:success] = 'Updated!'
     else
-      #doesn't work
       redirect_to game_path(@game), :flash => { :error => "Invalid move!" }
     end
   
