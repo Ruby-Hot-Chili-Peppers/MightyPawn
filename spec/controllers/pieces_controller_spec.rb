@@ -51,7 +51,7 @@ RSpec.describe PiecesController, type: :controller do
         piece = Rook.first #white Rook @ position_row: 0, position_column: 0
         piece2 = Pawn.first #white pawn @ position_row: 1, position_column: 0
         piece2.update_attributes(color: "black") #change piece to black to test capture
-
+    
         patch :update, params: {id: piece.id, y_coord: 1, x_coord: 0, moves: piece.moves + 1}
 
         piece2.reload

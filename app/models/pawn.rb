@@ -29,9 +29,9 @@ class Pawn < Piece
       @diag_left = Game.find(game_id).pieces.where(:color => 'white', :position_row => position_row - 1, :position_column => position_column - 1)
       #If there exists an opposing piece diagonally, we can move to the spot 
       if @diag_right.size != 0
-        return true if new_row == position_row - 1 && new_column = position_column + 1  
+        return true if new_row == position_row - 1 && new_column == position_column + 1  
       elsif @diag_left.size != 0
-        return true if new_row == position_row - 1 && new_column = position_column - 1   
+        return true if new_row == position_row - 1 && new_column == position_column - 1   
       end
     #------------------------------------BLACK PIECE LOGIC--------------------------------------------#
     else

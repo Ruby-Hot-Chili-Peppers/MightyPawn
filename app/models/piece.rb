@@ -101,7 +101,7 @@ class Piece < ApplicationRecord
     #borrowing this function from check? method
     opposing_pieces.each do | piece |
       if !piece.position_row.nil? && !piece.position_column.nil?
-        if piece.valid_move?(my_king.position_row, my_king.position_column)  
+        if piece.valid_move?(my_king.position_row, my_king.position_column) 
          #We don't want to update attribtues here as it will be done in the controller, so we revert back
           self.update_attributes(position_row: current_row, position_column: current_column)
           return true

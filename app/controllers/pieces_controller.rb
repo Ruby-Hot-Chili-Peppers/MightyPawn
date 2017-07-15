@@ -4,11 +4,11 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @game = Game.find(@piece.game_id)
 
-    if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
+    if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
       #Are we moving ourselves into check? If so, raise an error
-      if @piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
-        flash[:error] = "You can't put your king in check!"
-      end 
+      #if @piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
+      #  flash[:error] = "You can't put your king in check!"
+      #end 
 
       #This calls the capture logic to capture a piece if a piece is on the desired position
       begin
