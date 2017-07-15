@@ -86,7 +86,15 @@ $( init );
       <div class="modal-body">
         <form action="#" class="promotion-choice">
           <div class="promo-selection-container">
-            <% pieces = @game.pieces %>
+                <% ["Bishop", "Rook", "Knight", "Queen"].each do |type| %>
+                <div class="promo-selection-choice">              
+                    <label for="<%= type %>">
+                      <%= type %>
+                  </label>
+                  <input type="radio" name="piece-type" value="<%= type %>" id="pawnPromo%>">
+                </div>
+                <% end %>
+            <!--<% pieces = @game.pieces %>
               <% pieces.each do |piece| %>
                 <% if piece.type == Queen || Bishop || Knight || Rook && piece.color == color && piece.game_id == game_id && piece.user_id == current_user%>
                   <div class="promo-selection-choice">              
@@ -96,7 +104,7 @@ $( init );
                   </label>
                   <input type="radio" name="piece-type" value="<%= piece %>" id="pawnPromo%>">
                 </div>
-              <% end %>
+              <% end %>-->
           </div>
           <div class="promo-selection-submit">
             <input type="submit">
