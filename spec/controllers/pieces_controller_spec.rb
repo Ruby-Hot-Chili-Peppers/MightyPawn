@@ -59,6 +59,18 @@ RSpec.describe PiecesController, type: :controller do
         #the opposing piece should have its coordinates changed to nil, nil 
         expect([piece2.position_row, piece2.position_column]).to eq [nil,nil]
       end
+
+      it "doesn't let a piece move if moving will put the king in check" do
+        queen = Queen.find_by(color: "white")
+        queen.update_attributes(position_row: 5, position_column: 6)
+        pawn = Pawn.find_by(color: "black", position_column: 5) #currently @(6,5)
+
+        #if the pawn moves, we are in check!
+        patch :update, params: {id: pawn.id, y_coord: 5, x_coord: 5, moves: pawn.moves + 1}
+
+        #We shouldn't be able to move! 
+        expect([pawn.position_row, pawn.position_column]).to eq [6,5]
+      end
     end
 
   end
