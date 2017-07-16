@@ -157,17 +157,6 @@ RSpec.describe Game, type: :model do
         @king_white.reload
         expect(@game.check?).to be true 
       end
-      
-      it 'bug test black queen on the space to left of the white king causing  it to no be in check? No was pawn move logic' do
-        
-        Queen.last.update_attributes(position_row: 4, position_column: 0, moves: 7)  
-        @pawn_black.update_attributes(position_row: 3, position_column: 0, moves: 7) #white pawn
-        @pawn_black.reload
-        @king_black.update_attributes(position_row: 4, position_column: 1) #black king 
-        @king_black.reload
-        expect(@game.check?).to be true 
-      end
-      
 
     end
   end
