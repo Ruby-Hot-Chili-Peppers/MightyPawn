@@ -67,8 +67,11 @@ RSpec.describe PiecesController, type: :controller do
 
         #if the pawn moves, we are in check!
         patch :update, params: {id: pawn.id, y_coord: 5, x_coord: 5, moves: pawn.moves + 1}
+        queen.reload
+        pawn.reload
 
         #We shouldn't be able to move! 
+        expect([queen.position_row, queen.position_column]).to eq [5,6]
         expect([pawn.position_row, pawn.position_column]).to eq [6,5]
       end
     end

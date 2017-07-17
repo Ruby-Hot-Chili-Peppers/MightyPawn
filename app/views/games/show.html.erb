@@ -18,6 +18,15 @@ function init() {
           data: {
             x_coord: xCoord, 
             y_coord: yCoord
+          },
+          success: function (response) {
+            alert("Valid Move!");
+          },
+          error: function (request, status, error) {
+            //console.log(request.responseText)
+            //console.log(status)
+            //console.log(error)
+            alert(request.responseText);
           }
         });
       window.location.reload(true);

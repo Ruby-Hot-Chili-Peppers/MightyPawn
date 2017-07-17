@@ -14,11 +14,8 @@ class Bishop < Piece
     #returns true if moved diagonally
     delta_row = (new_row - position_row).abs
     delta_col = (new_column - position_column).abs
-    if delta_row == delta_col 
-      return true
-    else
-      return false
-    end
+    return true if delta_row == delta_col 
+    return false
   end  
 
 end
