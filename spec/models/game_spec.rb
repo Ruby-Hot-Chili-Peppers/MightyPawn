@@ -22,35 +22,35 @@ RSpec.describe Game, type: :model do
   describe "Check method working" do
     context 'make sure check is false when the game starts' do 
       it 'returns false for starting board position' do
-        expect(@game.check?).to be nil
+        expect(@game.check?.first).to be nil
       end
 
       it 'returns true for king being in check if knight  ' do
         #put rook infront of king it should return true if the rook has valid move to the king 
         @knight.update_attributes(position_row: 1, position_column: 2)
         @knight.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end   
       
       it 'returns true for king being in check if king ' do
         #put rook infront of king it should return true if the rook has valid move to the king 
         @king_black.update_attributes(position_row: 1, position_column: 4)
         @king_black.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end   
       
       it 'returns true for king being in check if bishop  ' do
         #put rook infront of king it should return true if the rook has valid move to the king 
         @bishop3.update_attributes(position_row: 1, position_column: 3)
         @bishop3.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end 
       
       it 'returns true for king being in check if Rook ' do
         #put rook infront of king it should return true if the rook has valid move to the king 
         @rook3.update_attributes(position_row: 1, position_column: 4)
         @rook3.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
       it 'returns true for king being in check if pawn ' do
@@ -58,20 +58,20 @@ RSpec.describe Game, type: :model do
         @pawn_black.update_attributes(position_row: 3, position_column: 3, moves: 7)
         @pawn_black.reload
         King.first.update_attributes(position_row: 2, position_column: 4)
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
       it 'returns true for king being in check if queen ' do
         #put rook infront of king it should return true if the rook has valid move to the king 
         @queen_black.update_attributes(position_row: 1, position_column: 4)
         @queen_black.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
        it 'returns true for king being in check with pawns removed from row' do
         #remove pawns to check that king is not in check since no piece can get there in one mover
         Pawn.all.update_all(position_row: nil, position_column: nil) 
-        expect(@game.check?).to be nil
+        expect(@game.check?.first).to be nil
       end 
       
         it 'remove all pieces on the board except 2 kings (in there starting position), game should not be in check' do
@@ -80,7 +80,7 @@ RSpec.describe Game, type: :model do
         Rook.all.update_all(position_row: nil, position_column: nil, moves: 1) 
         Queen.all.update_all(position_row: nil, position_column: nil, moves: 1) 
         Knight.all.update_all(position_row: nil, position_column: nil, moves: 1) 
-        expect(@game.check?).to be nil 
+        expect(@game.check?.first).to be nil 
       end 
       
       it 'white Queen casuing white king to not be in check' do
@@ -89,7 +89,7 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 0, position_column: 4)
         @king_white.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
       
@@ -99,7 +99,7 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 0, position_column: 4)
         @king_white.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
       it 'bug test white queen causing king to no be in check?' do
@@ -108,7 +108,7 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 0, position_column: 4)
         @king_white.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
       it 'bug test white queen causing king to no be in check?' do
@@ -117,7 +117,7 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 0, position_column: 4)
         @king_white.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
       it 'bug test white queen causing king to no be in check?' do
@@ -126,7 +126,7 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 0, position_column: 4)
         @king_white.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
       it 'bug test white queen causing king to no be in check?' do
@@ -136,7 +136,7 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 1, position_column: 4)
         @king_white.reload
-        expect(@game.check?).to eq('white') 
+        expect(@game.check?.first).to eq('white') 
       end
       
       it 'bug test white queen causing king to no be in check?' do
@@ -145,7 +145,7 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 4, position_column: 0)
         @king_white.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
       
       it 'bug test white queen on the space to left of the white king causing it to no be in check?' do
@@ -155,7 +155,7 @@ RSpec.describe Game, type: :model do
         @pawn_black.reload
         @king_white.update_attributes(position_row: 4, position_column: 1)
         @king_white.reload
-        expect(@game.check?).to eq('white')
+        expect(@game.check?.first).to eq('white')
       end
 
     end

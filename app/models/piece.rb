@@ -73,10 +73,12 @@ class Piece < ApplicationRecord
     current_column = self.position_column
     self.update_attributes(position_row: new_row, position_column: new_column)
     #Get the status of check?
-    status = self.game.check?
+    status, culprit = self.game.check?
     #Revert to original position
     self.update_attributes(position_row: current_row, position_column: current_column)
 
+    #**specidal case** Return false if we are moving to the location of the piece that puts us in check
+    return false if culprit && culprit.position_row == new_row && culprit.position_column == new_column
     #Return true if my king is in check
     return true if status == self.color
     return false
