@@ -48,10 +48,13 @@ $( init );
             <% pieces = @game.pieces %>
             <% pieces.each do |piece| %>
 
-              <% if piece.type == 'Queen' %>
+              <% if piece.type == 'Queen' || piece.type == 'Bishop' || piece.type == 'Knight' || piece.type == 'Rook'  %>
 
+                <input type="checkbox">
                 <label for="<%= piece.type %>">
                     <%= piece.symbol.html_safe%>
+                    <%= piece.type%>
+                </label>
               <% end %>
 
             <% end %>
