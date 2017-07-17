@@ -96,7 +96,7 @@ class Game < ApplicationRecord
       end
     end
 
-    return nil  
+    return nil
   end
 
 end

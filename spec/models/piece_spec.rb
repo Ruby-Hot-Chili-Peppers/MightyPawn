@@ -102,7 +102,7 @@ RSpec.describe Piece, type: :model do
   describe "moving_into_check?" do
     it "returns true if moving your piece puts your king in check" do
       #Note the white king is #@position (0,4)
-      pawn_white = Pawn.find_by(color: "white", position_column: 3) #@position (3,1)
+      pawn_white = Pawn.find_by(color: "white", position_column: 3) #@position (1,3)
       bishop_black = Bishop.where(color: "black").first #@position (7,2)
       
       #Setup the board such that the white pawn is preventing the bishop from taking the king
@@ -110,10 +110,12 @@ RSpec.describe Piece, type: :model do
 
       #if the pawn tries to move, he will put the king in check!
       check = pawn_white.moving_into_check?(3, 2)
+      pawn_white.reload
+      expect([pawn_white.position_row, pawn_white.position_column]).to eq([1,3])
       expect(check).to be(true)
     end
 
-    it "returns true if moving your piece puts your king in check" do
+    it "returns false if moving your piece does not put your king in check" do
       #Now we call the same pawn, but we don't move the bishop such that it is in position to take the king
       pawn_white = Pawn.find_by(color: "white", position_column: 3) #@position (1, 3)
       
