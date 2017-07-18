@@ -77,10 +77,12 @@ class Piece < ApplicationRecord
     #Revert to original position
     self.update_attributes(position_row: current_row, position_column: current_column)
 
-    #**specidal case** Return false if we are moving to the location of the piece that puts us in check
+    #**SPECIAL CASE**
+    #Return false if we are moving to capture the piece that puts us in check
     return false if culprit && culprit.position_row == new_row && culprit.position_column == new_column
     #Return true if my king is in check
     return true if status == self.color
+    #otherwise return false
     return false
   end  
 
