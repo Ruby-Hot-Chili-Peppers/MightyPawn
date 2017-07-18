@@ -1,5 +1,18 @@
 <script>
+
 function init() {
+
+  turn = '<%= @game.turn %>';
+  white = '<%= @game.white_player_id %>';
+  black = '<%= @game.black_player_id %>';
+
+  if (turn == white){
+    $('#black a').draggable({disabled: true});
+  }
+  else {
+    $('#white a').draggable({disabled: true});
+  };
+
   $('a').draggable({
     containment: 'table',
     scroll: false,
@@ -44,7 +57,11 @@ $( init );
 <br>  
 <br>
 <br>
-
+<% if @game.turn == @game.white_player_id %>
+<h1>Current player turn: White</h1>
+<% else %>
+<h1>Current player turn: Black</h1>
+<% end %>
 <table>
 <%(0..7).reverse_each do |position_row|%>
   <tr class= 'position_row'>
@@ -52,7 +69,9 @@ $( init );
       <td class= 'position_column' data-x-position='<%=position_column%>' data-y-position='<%=position_row%>'>
         <div class='chess_pieces'>
           <%piece = @game.data_method[position_column][position_row]%>
+          <div id='<%= piece.color if piece.present?%>'>
           <%=link_to piece.symbol.html_safe, piece_path(piece), onclick: 'return false' if piece.present?%>
+          </div>
         </div>
       </td>
     <% end %>

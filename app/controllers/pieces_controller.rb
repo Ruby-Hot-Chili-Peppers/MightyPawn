@@ -14,6 +14,7 @@ class PiecesController < ApplicationController
       end
 
       #If everything works we update the current piece's position
+      @game.switch_player_turn
       @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
     else
       if !@piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)

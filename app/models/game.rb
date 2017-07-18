@@ -57,7 +57,11 @@ class Game < ApplicationRecord
   end
 
   def switch_player_turn
-    turn == white_player_id ? self.turn = black_player_id : self.turn = white_player_id
+    if turn == white_player_id
+      update_attributes(turn: black_player_id)
+    else
+      update_attributes(turn: white_player_id)
+    end
   end
 
   def data_method
