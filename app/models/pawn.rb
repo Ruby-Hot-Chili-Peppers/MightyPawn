@@ -63,6 +63,23 @@ class Pawn < Piece
     #If we don't have a valid move
     return false
   end
+ 
+  def move_to!(new_row, new_column)
+    if can_promote?(new_row) && valid_move?(new_row, new_column)
+      promotion(new_row, new_column)
+    else
+      super(new_row, new_column)
+    end
+  end
+
+  #check if promotion is posible
+  def can_promote?(position_row)
+    position_row == 7 && color == 'white' || position_row == 0 && color == 'black'
+  end
+
+  #promotion of pawn
+  def promotion(new_row, new_column)
+    update_attributes(position_row: nil, position_column: nil)
+    game.pieces.create(position_row: new_row, position_column: new_column, type: type, color: color, user_id: user_id)
+  end
 end
-
-

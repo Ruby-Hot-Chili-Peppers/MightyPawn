@@ -13,6 +13,9 @@ class PiecesController < ApplicationController
         return flash.notice =  e.message
       end
       #update the current pieces position
+      if @piece.moves == nil
+        @piece.moves = 0
+      end
       @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
       #doesn't work
       flash[:success] = 'Updated!'
