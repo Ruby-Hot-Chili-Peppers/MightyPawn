@@ -4,17 +4,37 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @game = Game.find(@piece.game_id)
 
-    if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
-      #This calls the capture logic to capture a piece if a piece is on the desired position
-      begin
-        @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i)
-      rescue Exception => e
-        #If we try to capture our own piece....
-        return flash.notice =  e.message
-      end
+    if @piece.game.check?.first == @piece.color 
+     #alert_message = "You are in check!"
+     #render :json => error_message, :status = :continue
 
-      #If everything works we update the current piece's position
-      @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
+      #In this case, if you move out of check then moving_into_check will return false 
+      if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) && #notCheckmate
+        #This calls the capture logic to capture a piece if a piece is on the desired position
+        if @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i) == false
+          error_message = "You can't capture your own piece!"
+          render :json => error_message, :status => :method_not_allowed
+        else
+          #If everything works we update the current piece's position
+          @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
+        end
+      else
+        if !@piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
+          error_message = "Invalid move"
+        elsif @piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i)
+          error_message = "You must get out of check!"
+        end
+        render :json => error_message, :status => :method_not_allowed
+      end
+    elsif @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
+      #This calls the capture logic to capture a piece if a piece is on the desired position
+        if @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i) == false
+          error_message = "You can't capture your own piece!"
+          render :json => error_message, :status => :method_not_allowed
+        else
+          #If everything works we update the current piece's position
+          @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
+        end
     else
       if !@piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
         error_message = "Invalid move"
