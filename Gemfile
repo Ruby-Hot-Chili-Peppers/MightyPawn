@@ -67,3 +67,7 @@ gem 'devise'
 
 # For draggable and droppable
 gem 'jquery-ui-rails'
+
+# For websocket
+gem 'faye'
+gem 'faye-websocket'
