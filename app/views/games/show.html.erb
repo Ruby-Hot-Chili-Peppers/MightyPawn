@@ -39,7 +39,6 @@ function init() {
             alert(request.responseText);
           }
         });
-      window.location.reload(true);
     }
   });
 
@@ -49,6 +48,9 @@ function init() {
 };
 
 $( init );
+$(document).ajaxStop(function(){
+  window.location.reload();
+})
 </script>
 
 <h1> WELCOME TO YOUR GAME MWAHAHAHAH </h1>
