@@ -2,4 +2,8 @@
 
 require_relative 'config/environment'
 
+
+require_relative 'app/middleware/chat_backend'
+use ChatDemo::ChatBackend
+
 run Rails.application
