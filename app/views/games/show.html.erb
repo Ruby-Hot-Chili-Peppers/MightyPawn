@@ -54,15 +54,18 @@ $(document).ajaxStop(function(){
 </script>
 
 <h1> WELCOME TO YOUR GAME MWAHAHAHAH </h1>
+<br>
+<% if @game.check?.first %>
+  <div class= "alert col-8 offset-2">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <h1> <%= @game.check?.first %> is in check! </h1>
+  </div>
+<% end %> 
 
-<br>
-<br>  
-<br>
-<br>
 <% if @game.turn == @game.white_player_id %>
-<h1>Current player turn: White</h1>
+<h1>Current player turn: white</h1>
 <% else %>
-<h1>Current player turn: Black</h1>
+<h1>Current player turn: black</h1>
 <% end %>
 <table>
 <%(0..7).reverse_each do |position_row|%>
