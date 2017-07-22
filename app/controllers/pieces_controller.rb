@@ -4,11 +4,9 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @game = Game.find(@piece.game_id)
 
+    #If you are in check, you must move out of check if possible!
     if @piece.game.check?.first == @piece.color 
-     #alert_message = "You are in check!"
-     #render :json => error_message, :status = :continue
-
-      #In this case, if you move out of check then moving_into_check will return false 
+      #In this case, if you move out of check then moving_into_check will return false...we also need to add not in checkmate here, because if we are in checkmate, it will be impossible to move 
       if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) && #notCheckmate
         #This calls the capture logic to capture a piece if a piece is on the desired position
         if @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i) == false
