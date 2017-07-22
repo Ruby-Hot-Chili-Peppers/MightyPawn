@@ -5,8 +5,7 @@ App.pieces = App.cable.subscriptions.create('PiecesChannel', {
   received: function(data) {
     console.log(this.renderMessage(data)); //check console of other player to see that data did pass through
     alert("Other Player has made a move. Page will now reload");
-   return window.location.reload(true);  can refresh windows through, only pass data and use jquery to append DOM 
-    //return alert("Please Refresh page. Other player has moved");//
+   return window.location.reload(true);  //can refresh windows for now, possibly later use jquery to append DOM 
   },
 
   renderMessage: function(data) {
