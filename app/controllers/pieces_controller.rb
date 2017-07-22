@@ -4,22 +4,25 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @game = Game.find(@piece.game_id)
 
-    if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
+    if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
+      #This calls the capture logic to capture a piece if a piece is on the desired position
       begin
-        #will take piece off the board if captured, if not captured, this will do nothing
         @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i)
       rescue Exception => e
-        #doesn't work
+        #If we try to capture our own piece....
         return flash.notice =  e.message
       end
-      #update the current pieces position
+
+      #If everything works we update the current piece's position
+      @game.switch_player_turn
       @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
-      #doesn't work
-      flash[:success] = 'Updated!'
     else
-      #doesn't work
-      redirect_to game_path(@game), :flash => { :error => "Invalid move!" }
+      if !@piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
+        error_message = "Invalid move"
+      elsif @piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i)
+        error_message = "Moving into check eh"
+      end
+      render :json => error_message, :status => :method_not_allowed
     end
-  
   end
 end
