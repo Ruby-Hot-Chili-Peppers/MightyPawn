@@ -14,5 +14,5 @@
 //= require jquery_ujs
 //= require tether
 //= require bootstrap-sprockets
-//= require_tree .
+//= require_tree ./channels
 //= require jquery-ui
