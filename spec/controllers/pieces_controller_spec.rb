@@ -85,9 +85,11 @@ RSpec.describe PiecesController, type: :controller do
         black_pawn = Pawn.find_by(color: "black", position_column: 3)
         black_pawn.update_attributes(position_row: nil, position_column: nil)
 
+
         patch :update, params: {id: white_pawn.id, y_coord: 6, x_coord: 3, moves: white_pawn.moves + 1}
         white_pawn.reload
 
+        expect(white_pawn.game.check?.first).to eq "black"
         expect([white_pawn.position_row, white_pawn.position_column]).to eq [6,3]
       end
 
@@ -100,6 +102,9 @@ RSpec.describe PiecesController, type: :controller do
         patch :update, params: {id: white_pawn.id, y_coord: 2, x_coord: 3, moves: white_pawn.moves + 1}
         white_pawn.reload
 
+        expect(response.status).to eq(405)
+
+        expect(white_pawn.game.check?.first).to eq nil
         expect([white_pawn.position_row, white_pawn.position_column]).to eq [1,3]
       end
 
@@ -113,6 +118,8 @@ RSpec.describe PiecesController, type: :controller do
         patch :update, params: {id: black_pawn.id, y_coord: 1, x_coord: 3, moves: black_pawn.moves + 1}
         black_pawn.reload
 
+ 
+        expect(black_pawn.game.check?.first).to eq "white"
         expect([black_pawn.position_row, black_pawn.position_column]).to eq [1,3]
       end
 
@@ -125,6 +132,9 @@ RSpec.describe PiecesController, type: :controller do
         patch :update, params: {id: black_pawn.id, y_coord: 5, x_coord: 3, moves: black_pawn.moves + 1}
         black_pawn.reload
 
+        expect(response.status).to eq(405)
+
+        expect(black_pawn.game.check?.first).to eq nil
         expect([black_pawn.position_row, black_pawn.position_column]).to eq [6,3]
       end
     end
