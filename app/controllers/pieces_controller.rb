@@ -4,18 +4,37 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @game = Game.find(@piece.game_id)
 
-    if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
-      #This calls the capture logic to capture a piece if a piece is on the desired position
-      begin
-        @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i)
-      rescue Exception => e
-        #If we try to capture our own piece....
-        return flash.notice =  e.message
+    #If you are in check, you must move out of check if possible!
+    if @piece.game.check?.first == @piece.color 
+      #In this case, if you move out of check then moving_into_check will return false...we also need to add not in checkmate here, because if we are in checkmate, it will be impossible to move 
+      if @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) && #notCheckmate
+        #This calls the capture logic to capture a piece if a piece is on the desired position
+        if @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i) == false
+          error_message = "You can't capture your own piece!"
+          render :json => error_message, :status => :method_not_allowed
+        else
+          #If everything works we update the current piece's position
+          @game.switch_player_turn
+          @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
+        end
+      else
+        if !@piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
+          error_message = "Invalid move"
+        elsif @piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i)
+          error_message = "You must get out of check!"
+        end
+        render :json => error_message, :status => :method_not_allowed
       end
-
-      #If everything works we update the current piece's position
-      @game.switch_player_turn
-      @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
+    elsif @piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i) && !@piece.moving_into_check?(params[:y_coord].to_i, params[:x_coord].to_i) 
+      #This calls the capture logic to capture a piece if a piece is on the desired position
+        if @piece.move_to!(params[:y_coord].to_i, params[:x_coord].to_i) == false
+          error_message = "You can't capture your own piece!"
+          render :json => error_message, :status => :method_not_allowed
+        else
+          #If everything works we update the current piece's position and switch the turn
+          @game.switch_player_turn
+          @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
+        end
     else
       if !@piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)
         error_message = "Invalid move"

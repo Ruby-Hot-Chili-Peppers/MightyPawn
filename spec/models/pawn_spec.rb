@@ -52,13 +52,6 @@ RSpec.describe Pawn, type: :model do
         expect(@pawn1.valid_move?(2,1)).to be true
       end
 
-      it 'does not allow us to move diagonally to capture a piece of the same color' do
-        #remove pawn of opposing color and add pawn of same color
-        @pawn3.update_attributes(position_row: 6, position_column: 7)
-        @pawn2.update_attributes(position_row: 2, position_column: 1)
-        expect(@pawn1.valid_move?(2,1)).to be false
-      end
-
       it 'does not accept bogus moves!' do
         expect(@pawn1.valid_move?(1,5)).to be false
       end

@@ -61,19 +61,25 @@ class Piece < ApplicationRecord
     @pieces.each do |piece|
       if piece.position_row == new_row && piece.position_column == new_column && piece.color != color
         piece.update_attributes(position_row: nil, position_column: nil)
+        return true
       elsif piece.position_row == new_row && piece.position_column == new_column 
-        raise RuntimeError, "You can't capture your own piece!!!"
+       return false
       end
     end
+    return true
   end
 
   def moving_into_check?(new_row, new_column)
-    #We will switch to the new coordinates temporarily and see if we are in check!
+    #return false if the game is already in check before you try to move
+    #return false if self.game.check?.first == self.color
+
+    #We will switch to the new coordinates temporarily and see if we are in check if we move!
     current_row = self.position_row
     current_column = self.position_column
     self.update_attributes(position_row: new_row, position_column: new_column)
     #Get the status of check?
     status, culprit = self.game.check?
+  
     #Revert to original position
     self.update_attributes(position_row: current_row, position_column: current_column)
 
