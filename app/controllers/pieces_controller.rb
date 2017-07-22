@@ -16,6 +16,16 @@ class PiecesController < ApplicationController
       @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
       #doesn't work
       flash[:success] = 'Updated!'
+    #broadcast to channel when piece is updated
+      if @piece.save
+        ActionCable.server.broadcast 'pieces',
+          type: @piece.type, 
+          color: @piece.color, 
+          row: @piece.position_row,
+          column: @piece.position_column
+        head :ok
+      end
+
     else
       #doesn't work
       redirect_to game_path(@game), :flash => { :error => "Invalid move!" }

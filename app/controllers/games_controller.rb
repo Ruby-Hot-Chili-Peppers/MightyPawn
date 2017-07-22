@@ -13,14 +13,7 @@ class GamesController < ApplicationController
     @game = Game.create(white_player_id: current_user.id)
     @game.set_pieces_on_board
     @game.set_default_turn
-    #redirect_to game_path(@game)
-    #broadcast to channel when game is created
-    if @game.save
-      ActionCable.server.broadcast 'games'
-        games: @game.pieces
-        users: @game.users.email
-        head :ok
-    end
+    redirect_to game_path(@game)
   end
 
   def update
