@@ -1,5 +1,6 @@
-
-<h1> Start New Game </h1>
-<%= simple_form_for @game do |f| %>
-  <%= f.submit 'Start New Game'%>
-<% end %>
+<div class = "boom-box col-10 offset-1">
+  <h1> Start New Game </h1>
+  <%= simple_form_for @game do |f| %>
+    <%= f.submit 'Start New Game', class:'btn btn-success'%>
+  <% end %>
+</div>
