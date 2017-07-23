@@ -111,14 +111,21 @@ class Game < ApplicationRecord
     return false unless check? 
     color_pieces = Piece.where(color: color, game_id: id)
     
-    king_is_in_check_counter = 0
+    king_is_in_check_counter1 = 0
+    king_is_in_check_counter2 = 0
+    king_is_in_check_counter3 = 0
+    king_is_in_check_counter4 = 0 
+    king_is_in_check_counter5 = 0
+    king_is_in_check_counter6 = 0 
+    king_is_in_check_counter7 = 0
+    king_is_in_check_counter8 = 0 
     
     #note below test the 9 cases if king is still in check and if all avenues for movement are blocked off it is in checkmate
     #test the case the king moves forward 1 row is it still in check?
     color_pieces.each do |color_piece|
       if !color_piece.position_row.nil? && !color_piece.position_column.nil?
           if color_piece.valid_move?(king.position_row+1,king.position_column)
-          king_is_in_check_counter = king_is_in_check_counter + 1
+          king_is_in_check_counter1 = king_is_in_check_counter1 + 1
           end  
       end  
     end  
@@ -126,7 +133,7 @@ class Game < ApplicationRecord
     color_pieces.each do |color_piece|
       if !color_piece.position_row.nil? && !color_piece.position_column.nil?
           if color_piece.valid_move?(king.position_row-1,king.position_column)
-          king_is_in_check_counter = king_is_in_check_counter + 1
+          king_is_in_check_counter2 = king_is_in_check_counter2 + 1
           end  
       end  
     end 
@@ -134,7 +141,7 @@ class Game < ApplicationRecord
     color_pieces.each do |color_piece|
       if !color_piece.position_row.nil? && !color_piece.position_column.nil?
           if color_piece.valid_move?(king.position_row,king.position_column-1)
-          king_is_in_check_counter = king_is_in_check_counter + 1
+          king_is_in_check_counter3 = king_is_in_check_counter3 + 1
           end  
       end  
     end 
@@ -142,7 +149,7 @@ class Game < ApplicationRecord
     color_pieces.each do |color_piece|
       if !color_piece.position_row.nil? && !color_piece.position_column.nil?
           if color_piece.valid_move?(king.position_row,king.position_column+1)
-          king_is_in_check_counter = king_is_in_check_counter + 1
+          king_is_in_check_counter4 = king_is_in_check_counter4 + 1
           end  
       end  
     end 
@@ -151,7 +158,7 @@ class Game < ApplicationRecord
     color_pieces.each do |color_piece|
       if !color_piece.position_row.nil? && !color_piece.position_column.nil?
           if color_piece.valid_move?(king.position_row+1,king.position_column-1)
-          king_is_in_check_counter = king_is_in_check_counter + 1
+          king_is_in_check_counter5 = king_is_in_check_counter5 + 1
           end  
       end  
     end 
@@ -160,7 +167,7 @@ class Game < ApplicationRecord
     color_pieces.each do |color_piece|
       if !color_piece.position_row.nil? && !color_piece.position_column.nil?
           if color_piece.valid_move?(king.position_row+1,king.position_column+1)
-          king_is_in_check_counter = king_is_in_check_counter + 1
+          king_is_in_check_counter6 = king_is_in_check_counter6 + 1
           end  
       end  
     end 
@@ -168,7 +175,7 @@ class Game < ApplicationRecord
     color_pieces.each do |color_piece|
       if !color_piece.position_row.nil? && !color_piece.position_column.nil?
           if color_piece.valid_move?(king.position_row-1,king.position_column-1)
-          king_is_in_check_counter = king_is_in_check_counter + 1
+          king_is_in_check_counter7 = king_is_in_check_counter7 + 1
           end  
       end  
     end 
@@ -177,13 +184,13 @@ class Game < ApplicationRecord
     color_pieces.each do |color_piece|
       if !color_piece.position_row.nil? && !color_piece.position_column.nil?
           if color_piece.valid_move?(king.position_row-1,king.position_column+1)
-          king_is_in_check_counter = king_is_in_check_counter + 1
+          king_is_in_check_counter8 = king_is_in_check_counter8 + 1
           end  
       end  
     end 
   
 
-  if king_is_in_check_counter > 8
+  if king_is_in_check_counter1 >= 1 && king_is_in_check_counter2 >= 1 && king_is_in_check_counter3 >= 1 && king_is_in_check_counter4 >= 1 &&king_is_in_check_counter5 >= 1 && king_is_in_check_counter6 >= 1 && king_is_in_check_counter7 >= 1 &&king_is_in_check_counter8 >= 1
     #not in checkmate  because in one instance the king could move and was not in check
     return true
   else

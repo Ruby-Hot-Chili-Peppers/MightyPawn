@@ -48,7 +48,21 @@ RSpec.describe Bishop, type: :model do
         #moving rook like bishop checking if valid
         expect(@bishop1.valid_move?(0,1)).to be false
       end
-
+    
+    it 'allows us to move daigonal forward if not obstructed' do
+        Pawn.all.update_all(position_row: nil, position_column: nil)
+        expect(@bishop1.valid_move?(5,7)).to be true
+    end
+    
+    it 'allows us to move daigonal forward if not obstructed' do
+        Pawn.all.update_all(position_row: nil, position_column: nil)
+        Bishop.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+        Rook.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+        Queen.all.update_all(position_row: nil, position_column: nil, moves: 1) 
+        Knight.all.update_all(position_row: nil, position_column: nil, moves: 1)
+        @bishop1.update_attributes(position_row: 0, position_column: 7)
+        expect(@bishop1.valid_move?(7,0)).to be true
+    end
 
     end
   end

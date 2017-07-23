@@ -52,12 +52,13 @@ RSpec.describe Queen, type: :model do
         @queen1.update_attributes(position_row: 3, position_column: 0)
         expect(@queen1.valid_move?(3,6)).to be true
       end
+      
+      
+      it 'allows us to move daigonal forward if not obstructed' do
+        Pawn.all.update_all(position_row: nil, position_column: nil)
+        expect(@queen1.valid_move?(4,7)).to be true
+      end
 
- #     it 'does not allow moving unless straight column or row or daigonal' do
-#        Pawn.all.update_all(position_row: nil, position_column: nil)
-        #moving rook like queen checking if valid
-#        expect(@queen1.valid_move?(1,1)).to raise_error(RuntimeError)
-   #   end
 
 
     end

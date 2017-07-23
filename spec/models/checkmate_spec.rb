@@ -16,6 +16,8 @@ RSpec.describe Game, type: :model do
     @king_black = King.last
     @king_white = King.first
     @pawn_black = Pawn.last
+    @rook1 = Rook.first
+    @rook2 = Rook.second
     
   end
 
@@ -35,13 +37,33 @@ RSpec.describe Game, type: :model do
 
      it 'returns true if king cannot move without being in check? ' do
         #put king in checkmate? to make sure the logic work
-        @king_black.update_attributes(position_row: 4, position_column: 2)
+        @king_black.update_attributes(position_row: 4, position_column: 4)
         @queen_white.update_attributes(position_row: 4, position_column: 7)
-        Rook.first.update_attributes(position_row: 3, position_column: 0)
-        Rook.second.update_attributes(position_row: 5, position_column: 0)
-        @king_black.reload
+        @rook1.update_attributes(position_row: 3, position_column: 0)
+        @rook2.update_attributes(position_row: 5, position_column: 0)
+        #byebug
+        expect(@game.checkmate?(@king_black)).to be true
+      end
+      
+     it 'returns true if king cannot move without being in check test 2? ' do
+        #put king in checkmate? to make sure the logic works
+        @king_black.update_attributes(position_row: 4, position_column: 5)
+        @queen_white.update_attributes(position_row: 4, position_column: 7)
+        @rook1.update_attributes(position_row: 3, position_column: 0)
+        @rook2.update_attributes(position_row: 5, position_column: 0)
+        #byebug
         expect(@game.checkmate?(@king_black)).to be true
       end 
+      
+       it 'returns false if king can take out a piece threating it? ' do
+        #put king next to queen threating it, if it takes it out should not be in checkmate (all pieces are  in default spot except 2 enemy rooks and queen)
+        @king_black.update_attributes(position_row: 4, position_column: 6)
+        @queen_white.update_attributes(position_row: 4, position_column: 7)
+        @rook1.update_attributes(position_row: 3, position_column: 0)
+        @rook2.update_attributes(position_row: 5, position_column: 0)
+        #byebug
+        expect(@game.checkmate?(@king_black)).to be false
+      end  
   
 
 
