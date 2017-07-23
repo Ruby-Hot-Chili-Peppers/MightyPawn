@@ -57,7 +57,11 @@ class Game < ApplicationRecord
   end
 
   def switch_player_turn
-    turn == white_player_id ? self.turn = black_player_id : self.turn = white_player_id
+    if turn == white_player_id
+      update_attributes(turn: black_player_id)
+    else
+      update_attributes(turn: white_player_id)
+    end
   end
 
   def data_method
@@ -82,21 +86,20 @@ class Game < ApplicationRecord
     black_pieces.each do | black_piece |
       if !black_piece.position_row.nil? && !black_piece.position_column.nil?
         if black_piece.valid_move?(white_king.position_row, white_king.position_column)  
-         # puts black_piece.valid_move?(white_king.position_row, white_king.position_column) 
-          return true
+          return 'white', black_piece
         end 
       end
     end
     
     white_pieces.each do |white_piece|
       if !white_piece.position_row.nil? && !white_piece.position_column.nil?
-        if  white_piece.valid_move?(black_king.position_row, black_king.position_column)  && !white_piece.nil?
-          return true
+        if white_piece.valid_move?(black_king.position_row, black_king.position_column) 
+          return 'black', white_piece
         end
       end
     end
 
-    return false  
+    return nil, nil
   end
 
 end

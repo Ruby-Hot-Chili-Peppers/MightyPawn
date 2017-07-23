@@ -11,27 +11,7 @@ class Piece < ApplicationRecord
   def out_of_boundary?(new_row, new_column)
     new_row < 0 || new_row > 7 || new_column < 0 || new_column > 7
   end
-   
-  #check if piece moves to occupied space
-  def occupied_space?
-  end
-   
-  #check if piece captures other piece after moving into new space
-  def captured_piece?
-  end
-   
-  #check if move puts opponent in check
-  def check?
-  end
-   
-  #check if moves puts current_user in check 
-  def self_in_check?
-  end
-   
-  #check if move puts opponent in check_mate
-  def check_mate?
-  end
-   
+  
   #checks for valid move
   def valid_move?(new_row, new_column)
     return false if out_of_boundary?(new_row, new_column)
@@ -64,7 +44,11 @@ class Piece < ApplicationRecord
 
       #diagonal case
     elsif ((row_final - row_init).to_f/(col_final - col_init).to_f ).abs == 1
-      return Piece.exists?(position_row: row_range, position_column: col_range, game_id: game_id)
+      i = 0
+      row_range.each do |row_val|
+        return true if Piece.exists?(position_row: row_val, position_column: col_range[i], game_id: game_id)
+        i = i + 1
+      end
     end
 
     #invalid input case
@@ -77,9 +61,36 @@ class Piece < ApplicationRecord
     @pieces.each do |piece|
       if piece.position_row == new_row && piece.position_column == new_column && piece.color != color
         piece.update_attributes(position_row: nil, position_column: nil)
+        return true
       elsif piece.position_row == new_row && piece.position_column == new_column 
-        raise RuntimeError, "You can't capture your own piece!!!"
+       return false
       end
     end
+    return true
   end
+
+  def moving_into_check?(new_row, new_column)
+    #return false if the game is already in check before you try to move
+    #return false if self.game.check?.first == self.color
+
+    #We will switch to the new coordinates temporarily and see if we are in check if we move!
+    current_row = self.position_row
+    current_column = self.position_column
+    self.update_attributes(position_row: new_row, position_column: new_column)
+    #Get the status of check?
+    status, culprit = self.game.check?
+  
+    #Revert to original position
+    self.update_attributes(position_row: current_row, position_column: current_column)
+
+    #**SPECIAL CASE**
+    #Return false if we are moving to capture the piece that puts us in check
+    return false if culprit && culprit.position_row == new_row && culprit.position_column == new_column
+    #Return true if my king is in check
+    return true if status == self.color
+    #otherwise return false
+    return false
+  end  
+
+
 end
