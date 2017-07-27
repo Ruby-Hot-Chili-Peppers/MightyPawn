@@ -1,5 +1,11 @@
 class PiecesController < ApplicationController  
 
+  def index
+    @game = Game.find_by_id(params[:game_id])
+    return render_not_found if @game.blank?
+    render json: @game.pieces.order(:id)
+  end
+
   def update  
     @piece = Piece.find(params[:id])
     @game = Game.find(@piece.game_id)
