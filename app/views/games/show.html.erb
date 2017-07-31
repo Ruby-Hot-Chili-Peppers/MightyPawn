@@ -2,7 +2,7 @@
 
 function init() {
 
-  turn = '<%= @game.turn %>';
+  /*turn = '<%= @game.turn %>';
   white = '<%= @game.white_player_id %>';
   black = '<%= @game.black_player_id %>';
 
@@ -11,7 +11,7 @@ function init() {
   }
   else {
     $('#white a').draggable({disabled: true});
-  };
+  };*/
 
   $('a').draggable({
     containment: 'table',
@@ -32,11 +32,59 @@ function init() {
             x_coord: xCoord, 
             y_coord: yCoord
           },
-          success: function (response) {
-            alert("Valid Move!");
+          success: function(data) {
+            //$('tbody .chess_pieces').children().remove();
+            //alert('loop start');
+            var symb = function(type, color){
+                if (color == 'white') {
+                  if (type == 'King') {return '&#9812'}
+                  if (type == 'Queen') {return '&#9813'}
+                  if (type == 'Rook') {return '&#9814'}
+                  if (type == 'Bishop') {return '&#9815'}
+                  if (type == 'Knight') {return '&#9816'}
+                  if (type == 'Pawn') {return '&#9817'}           
+                }
+                if (color == 'black') {
+                    if (type == 'King') {return '&#9818'}
+                    if (type == 'Queen') {return '&#9819'}
+                    if (type == 'Rook') {return '&#9820'}
+                    if (type == 'Bishop') {return '&#9821'}
+                    if (type == 'Knight') {return '&#9822'}
+                    if (type == 'Pawn') {return '&#9823'}          
+                }                
+            }
+
+            $.each(data, function(index, piece) {
+              //write loop here
+              //console.log(piece);
+              
+              $('tbody tr').each(function(){
+                $(this).find('td').each(function(){
+                  if ($(this).data('x-position') == piece.position_column &&  $(this).data('y-position') == piece.position_row) {
+                    var liElement = '<div id="'+ piece.color +'><a onclick="return false" href="/pieces/' + piece.id
+                    +'" class= "ui-draggable ui-draggable-handle ui-draggrable-disabled" style="position:relative;">' + symb(piece.type, piece.color)
+                    + '</a></div>';
+                    console.log('==========before row:'+$(this).data('x-position')+", col:"+$(this).data('y-position')+'=============');
+                    console.log($(this).html());
+                    console.log('==========new element row:'+$(this).data('x-position')+", col:"+$(this).data('y-position')+'=============');
+                    console.log(liElement);
+                    $('this').children().replaceWith(liElement);
+                    console.log('==========after row:'+$(this).data('x-position')+", col:"+$(this).data('y-position')+'=============');
+                    console.log($(this).html());
+                    return;
+                  }
+                });
+              });
+            });
+            alert('loop complete');
           },
+          /*success: function (response) {
+            alert("Valid Move!");
+
+          },*/
           error: function (request, status, error) {
             alert(request.responseText);
+            window.location.reload();
           }
         });
     }
@@ -46,11 +94,11 @@ function init() {
     greedy: true
   });
 };
-
 $( init );
+/*
 $(document).ajaxStop(function(){
   window.location.reload();
-})
+}) */
 </script>
 
 <h1> WELCOME TO YOUR GAME MWAHAHAHAH </h1>
