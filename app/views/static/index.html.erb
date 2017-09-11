@@ -1,38 +1,39 @@
 
 
 <h2 class="text-center"> 
-  <%= link_to "Start New Game", new_game_path %> 
-</h2>
+<br>
+<h1>
+  <%= link_to "Start New Game", new_game_path, class:'btn btn-success' %>
+</h1>
 
 <br>
+<div class = "boom-box col-8 offset-2">
+  <h1> Available Games </h1>
 
-<h1> Available Games </h1>
+  <% @available.each do |game| %>
+    <% if current_user %>
+      <% if game.white_player_id != current_user.id %>
+        <h2 class="text-center"> 
+          <%= link_to "Game #{game.id}", game_path(game) %> 
+          <br>
+        </h2>
+      <% end %>
+    <% else %>
+        <h2 class="text-center"> 
+          <%= link_to "Game #{game.id}", new_user_session_path %>
+        </h2>
+    <% end %>
+  <% end %>
 
-<% @available.each do |game| %>
+  <h1> Your Current Games </h1>
   <% if current_user %>
-    <% if game.white_player_id != current_user.id %>
+    <% @current.each do |game| %>
+      <% if current_user.id == game.white_player_id || current_user.id == game.black_player_id %>
       <h2 class="text-center"> 
-        <%= link_to "Game #{game.id}", game_path(game) %> 
-        <br>
+      <%= link_to "Game #{game.id}", game_path(game) %> 
+      <br>
       </h2>
-    <% end %>
-  <% else %>
-      <h2 class="text-center"> 
-        <%= link_to "Game #{game.id}", new_user_session_path %>
-      </h2>
-  <% end %>
-<% end %>
-
-<h1> Your Current Games </h1>
-<% if current_user %>
-  <% @current.each do |game| %>
-    <% if current_user.id == game.white_player_id || current_user.id == game.black_player_id %>
-    <h2 class="text-center"> 
-    <%= link_to "Game #{game.id}", game_path(game) %> 
-    <br>
-    </h2>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
-
-<br>
+</div>
