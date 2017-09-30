@@ -34,6 +34,15 @@ class PiecesController < ApplicationController
           #If everything works we update the current piece's position and switch the turn
           @game.switch_player_turn
           @piece.update_attributes(position_row: params[:y_coord], position_column: params[:x_coord], moves: @piece.moves + 1)
+          
+          #broadcast to channel when piece is updated
+          ActionCable.server.broadcast 'pieces',
+          type: @piece.type, 
+          color: @piece.color, 
+          row: @piece.position_row,
+          column: @piece.position_column
+          head :ok
+          
         end
     else
       if !@piece.valid_move?(params[:y_coord].to_i, params[:x_coord].to_i)

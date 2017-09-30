@@ -52,4 +52,7 @@ config.action_mailer.default_url_options = { host: 'mighty-pawn.herokuapp.com' }
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  #config.action_cable.url = "ws://localhost:3000/cable"
+  #changed this url based on uri that I was listening to the app
+  config.action_cable.url = "ws://127.0.0.1:3030/cable"
 end
